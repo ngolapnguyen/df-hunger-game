@@ -1,26 +1,457 @@
-html,
-body {
+html, body, #__next {
+  width: 100%;
+  height: 100%;
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
+  font-family: 'ArcadeClassic', sans-serif;
 }
 
 * {
   box-sizing: border-box;
+  position: relative;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
+button:hover {
+  opacity: 0.8;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+@keyframes background-sprites {
+  to { background-position: -768px; }
+}
+
+.game-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background-image: url('/assets/spritesheets/terrains/water.png');
+  background-size: 192px;
+  animation: background-sprites 1.5s steps(3) infinite;
+  overflow: hidden;
+}
+
+
+/* Island */
+
+.island {
+  position: relative;
+  margin: auto;
+  width: 768px;
+  height: 768px;
+  display: flex;
+  flex-direction: column;
+}
+
+.island .row {
+  width: 100%;
+  display: flex;
+}
+
+.island .col {
+  width: 48px;
+  height: 48px;
+  background-image: url('/assets/spritesheets/terrains/grass.png');
+  background-size: 288px;
+  background-position-y: -288px;
+} 
+
+.island .row:first-of-type .col {
+  background-position-x: -48px;
+  background-position-y: 0;
+}
+
+.island .col:first-of-type {
+  background-position-x: 0;
+  background-position-y: -48px;
+}
+
+.island .col:last-of-type {
+  background-position-x: -96px;
+  background-position-y: -48px;
+}
+
+.island .row:last-of-type .col {
+  background-position-x: -48px;
+  background-position-y: -96px;
+}
+
+.island .row:first-of-type .col:first-of-type { 
+  background-position-x: 0;
+  background-position-y: 0;
+}
+
+.island .row:first-of-type .col:last-of-type { 
+  background-position-x: -96px;
+  background-position-y: 0;
+}
+
+.island .row:last-of-type .col:first-of-type { 
+  background-position-x: 0;
+  background-position-y: -96px;
+}
+
+.island .row:last-of-type .col:last-of-type { 
+  background-position-x: -96px;
+  background-position-y: -96px;
+}
+
+/* Playground */
+
+.playground {
+  position: absolute;
+  margin: auto;
+  width: 576px;
+  height: 576px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  box-sizing: content-box;
+}
+
+.playground .col {
+  width: 48px;
+  height: 48px;
+  background-image: url('/assets/spritesheets/terrains/dirt.png');
+  background-size: 384px;
+  background-position-y: -48px;
+  background-position-x: -48px;
+}
+
+.playground .row:nth-of-type(2n) .col:nth-of-type(2n + 1)::before,
+.playground .row:nth-of-type(2n + 1) .col:nth-of-type(2n)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.playground .row {
+  width: 100%;
+  display: flex;
+}
+
+@keyframes flicker {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.playground .col.next::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(173, 255, 47, 0.5);
+  animation: flicker 1.5s infinite;
+}
+
+/* Player */
+
+.players {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes player-idle-sprites {
+  from { background-position: 0 }
+  to { background-position: -288px; }
+}
+
+@keyframes player-hit-sprites {
+  from { background-position: -1008px }
+  to { background-position: -1224px; }
+}
+
+.player {
+  width: 72px;
+  height: 72px;
+  position: absolute;
+  transform: translate(-12px, -24px);
+}
+
+.player::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: 1728px;
+}
+
+.player:nth-of-type(1)::before {
+  background-image: url('/assets/spritesheets/players/1.png');
+}
+
+.player:nth-of-type(2)::before {
+  background-image: url('/assets/spritesheets/players/2.png');
+}
+
+.player:nth-of-type(3)::before {
+  background-image: url('/assets/spritesheets/players/3.png');
+}
+
+.player:nth-of-type(4)::before {
+  background-image: url('/assets/spritesheets/players/4.png');
+}
+
+.player.idle::before {
+  animation: player-idle-sprites 0.5s steps(4) infinite;
+}
+
+.player.hit::before {
+  animation: player-hit-sprites 0.5s steps(3) infinite;
+}
+
+.player.face-left::before {
+  transform: scaleX(-1);
+}
+
+.nametag {
+  font-size: 12px;
+  width: 64px;
+  height: 24px;
+  box-shadow: 0 0 5px black;
+  border-radius: 4px;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: absolute;
+  top: -25%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.nametag:hover {
+  opacity: 0.5;
+}
+
+.arrow {
+  width: 48px;
+  height: 48px;
+  position: absolute;
+  left: 48px;
+  top: 0;
+  transform: rotate(90deg) translateX(-50%);
+}
+
+/* Movement Controls */
+
+.movement-controls {
+  z-index: 1;
+  position: absolute;
+  width: 288px;
+  height: 288px;
+  bottom: 64px;
+  right: 64px;
+}
+
+.movement-controls button {
+  width: 96px;
+  height: 96px;
+  cursor: pointer;
+  position: absolute;
+  background-image: url('/assets/spritesheets/controls/buttons.png');
+  background-size: 288px;
+  background-position-x: -24px;
+  background-position-y: -168px;
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  color: white;
+  font-size: 20px;
+  font-family: 'ArcadeClassic', sans-serif;
+}
+
+.movement-controls button.up {
+  top: 0;
+  left: 96px;
+}
+
+.movement-controls button.down {
+  bottom: 0;
+  left: 96px;
+}
+
+.movement-controls button.left {
+  top: 96px;
+  left: 0;
+}
+
+.movement-controls button.right {
+  top: 96px;
+  right: 0;
+}
+
+.bomb {
+  width: 72px;
+  height: 72px;
+  position: absolute;
+  top: 0;
+  left: 528px;
+  transform: translate(-16.67%, -16.67%);
+}
+
+/* Logs */
+
+.logs {
+  z-index: 1;
+  position: absolute;
+  width: 448px;
+  height: 448px;
+  bottom: 0;
+  left: 64px;
+  background-image: url('/assets/spritesheets/controls/setting-menu.png');
+  background-size: 1024px;
+  background-position-x: -544px;
+  background-position-y: -32px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateY(312px);
+  transition: all 0.3s;
+}
+
+.logs.expanded {
+  transform: translateY(0);
+}
+
+.logs .header {
+  color: white;
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 16px;
+  padding: 0 24px;
+  border-bottom: 1px solid white;
+}
+
+.logs .content {
+  width: 100%;
+}
+
+.log-item {
+  height: 48px;
+  padding: 8px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  background-color: white;
+  border: 2px solid rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.log-item .success {
+  color: green;
+}
+
+.log-item .danger {
+  color: red;
+}
+
+.logs .expand-button {
+  position: absolute;
+  top: 12px;
+  right: -48px;
+  width: 48px;
+  height: 48px;
+  background-image: url('/assets/spritesheets/controls/buttons.png');
+  background-size: 144px;
+  background-position-x: -12px;
+  background-position-y: -84px;
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  color: white;
+  cursor: pointer;
+}
+
+/* Points */
+
+.points {
+  position: absolute;
+  top: 64px;
+  left: 64px;
+  font-size: 48px;
+  color: white;
+  line-height: 1;
+}
+
+/* Rounds */
+
+.rounds {
+  position: absolute;
+  top: 64px;
+  right: 64px;
+  font-size: 48px;
+  color: white;
+  line-height: 1;
+}
+
+/* Start Screen */
+
+.start-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.play-button {
+  width: 192px;
+  height: 64px;
+  background-image: url('/assets/spritesheets/controls/play-button.png');
+  background-size: 392px;
+  background-position-y: -64px;
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+}
+
+.start-screen input {
+  border-radius: 8px;
+  font-size: 20px;
+  padding: 8px;
+  text-align: center;
 }
