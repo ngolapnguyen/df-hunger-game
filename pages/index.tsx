@@ -1,8 +1,8 @@
 import { Logs } from "../components/Logs";
 import { Map } from "../components/Map";
 import { MovementControls } from "../components/MovementControls";
-import { Points } from "../components/Points";
-import { Rounds } from "../components/Rounds";
+import { LeftCorner } from "../components/LeftCorner";
+import { RightCorner } from "../components/RightCorner";
 import { StartScreen } from "../components/StartScreen";
 
 export default function Home() {
@@ -11,8 +11,8 @@ export default function Home() {
       <Map />
       <MovementControls />
       <Logs />
-      <Points />
-      <Rounds />
+      <LeftCorner />
+      <RightCorner />
       <StartScreen />
     </div>
   );

@@ -1,26 +1,33 @@
 import { useState } from "react";
+import { useGameContext } from "../contexts/game";
 
 export const Logs = () => {
+  const { gameState, currentPlayer } = useGameContext();
   const [isLogsExpanded, setIsLogsExpanded] = useState(false);
 
   return (
     <div className={["logs", isLogsExpanded ? "expanded" : ""].join(" ")}>
       <div className="header">Logs</div>
       <div className="content">
-        <div className="log-item">
-          You moved to (2, 2).{" "}
-          <span className="success">
-            You reached the goal! Congratulations!
-          </span>
-        </div>
-        <div className="log-item">You moved to (1, 1).</div>
-        <div className="log-item">
-          You moved to (2, 2).{" "}
-          <span className="success">You got 4 points!</span>
-        </div>
-        <div className="log-item">
-          You moved to (3, 3). <span className="danger">You hit a bomb!</span>
-        </div>
+        {gameState &&
+          currentPlayer &&
+          gameState.history.map((roundHistory, index) => {
+            const playerHistory = roundHistory[currentPlayer.id];
+
+            return (
+              <div className="log-item" key={index}>
+                You {playerHistory.action} {playerHistory.action_result}.
+                {playerHistory.got_boom && (
+                  <div className="danger">You hit a bomb!</div>
+                )}
+                {playerHistory.item && (
+                  <div className="success">
+                    You got {playerHistory.item.value} points!
+                  </div>
+                )}
+              </div>
+            );
+          })}
       </div>
       <button
         type="button"

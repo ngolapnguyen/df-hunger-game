@@ -1,22 +1,84 @@
-import { FormEvent, useRef } from "react";
+import { FormEvent, useRef, useState } from "react";
+import { useGameContext } from "../contexts/game";
+import { client } from "../libs/apis";
 
 export const StartScreen = () => {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const gameIdInputRef = useRef<HTMLInputElement>(null);
+  const { gameState, setGameId, setPlayerToken } = useGameContext();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log(inputRef.current?.value);
+  const onNewGame = async () => {
+    try {
+      setIsLoading(true);
+
+      // Create a new game
+      const newGameResponse = await client.createNewGame();
+      const gameId = newGameResponse.data.id;
+
+      // Join the game
+      const joinGameResponse = await client.joinGame(gameId);
+      const playerToken = joinGameResponse.data.token;
+
+      setGameId(gameId);
+      setPlayerToken(playerToken);
+    } catch (error) {
+      alert(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
+  const onJoin = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const gameId = gameIdInputRef.current?.value || "";
+
+    if (!gameId) {
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+
+      // Join the game
+      const joinGameResponse = await client.joinGame(gameId);
+      const playerToken = joinGameResponse.data.token;
+
+      setGameId(gameId);
+      setPlayerToken(playerToken);
+    } catch (error) {
+      alert(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (gameState) {
+    return null;
+  }
+
   return (
-    <form className="start-screen" onSubmit={onSubmit}>
-      <input
-        type="number"
-        name="gameId"
-        placeholder="Enter game ID"
-        ref={inputRef}
-      />
-      <button type="submit" className="play-button" />
-    </form>
+    <div className="start-screen">
+      <button
+        type="submit"
+        className="play-button"
+        onClick={onNewGame}
+        disabled={isLoading}
+      >
+        {isLoading ? "Loading..." : "New Game"}
+      </button>
+      <div>Or</div>
+      <form className="join-form" onSubmit={onJoin}>
+        <input
+          type="number"
+          name="gameId"
+          placeholder="Enter game ID"
+          ref={gameIdInputRef}
+        />
+        <button type="submit" className="play-button" disabled={isLoading}>
+          {isLoading ? "Loading..." : "Join"}
+        </button>
+      </form>
+    </div>
   );
 };

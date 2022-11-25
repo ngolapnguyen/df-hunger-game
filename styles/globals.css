@@ -11,6 +11,11 @@ html, body, #__next {
   position: relative;
 }
 
+button {
+  font-family: 'ArcadeClassic', sans-serif;
+  color: white;
+}
+
 button:hover {
   opacity: 0.8;
 }
@@ -26,7 +31,6 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
-
 
 @keyframes background-sprites {
   to { background-position: -768px; }
@@ -261,8 +265,6 @@ input[type=number] {
   width: 48px;
   height: 48px;
   position: absolute;
-  left: 48px;
-  top: 0;
   transform: rotate(90deg) translateX(-50%);
 }
 
@@ -289,9 +291,7 @@ input[type=number] {
   background-color: transparent;
   border: 0;
   outline: 0;
-  color: white;
   font-size: 20px;
-  font-family: 'ArcadeClassic', sans-serif;
 }
 
 .movement-controls button.up {
@@ -318,8 +318,6 @@ input[type=number] {
   width: 72px;
   height: 72px;
   position: absolute;
-  top: 0;
-  left: 528px;
   transform: translate(-16.67%, -16.67%);
 }
 
@@ -358,7 +356,9 @@ input[type=number] {
 }
 
 .logs .content {
+  flex: 1;
   width: 100%;
+  overflow: auto;
 }
 
 .log-item {
@@ -399,9 +399,9 @@ input[type=number] {
   cursor: pointer;
 }
 
-/* Points */
+/* Left Corner */
 
-.points {
+.left-corner {
   position: absolute;
   top: 64px;
   left: 64px;
@@ -413,12 +413,15 @@ input[type=number] {
 /* Rounds */
 
 .rounds {
-  position: absolute;
-  top: 64px;
-  right: 64px;
-  font-size: 48px;
-  color: white;
-  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rounds .loader {
+  width: 48px;
+  height: 48px;
+  margin-left: 16px;
 }
 
 /* Start Screen */
@@ -437,16 +440,28 @@ input[type=number] {
   z-index: 10;
 }
 
+.start-screen > * {
+  margin-bottom: 16px;
+  color: white;
+}
+
+.start-screen .join-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .play-button {
   width: 192px;
   height: 64px;
   background-image: url('/assets/spritesheets/controls/play-button.png');
   background-size: 392px;
-  background-position-y: -64px;
   background-color: transparent;
   border: 0;
   outline: 0;
   cursor: pointer;
+  font-size: 24px;
 }
 
 .start-screen input {
@@ -454,4 +469,33 @@ input[type=number] {
   font-size: 20px;
   padding: 8px;
   text-align: center;
+}
+
+/* Right corner */
+
+.right-corner {
+  position: absolute;
+  top: 64px;
+  right: 64px;
+  font-size: 48px;
+  color: white;
+  line-height: 1;
+}
+
+.right-corner .quit-button {
+  width: 144px;
+  height: 48px;
+  background-image: url('/assets/spritesheets/controls/play-button.png');
+  background-size: 294px;
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+/* Goal */
+
+.goal {
+  transform: translate(-12.5%, -33.33%);
 }
