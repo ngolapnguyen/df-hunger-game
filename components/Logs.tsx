@@ -1,16 +1,36 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useGameContext } from "../contexts/game";
 
 export const Logs = () => {
   const { gameState, currentPlayer } = useGameContext();
   const [isLogsExpanded, setIsLogsExpanded] = useState(false);
 
+  const goalLocation = useMemo(() => {
+    let goalCol = -1;
+    let goalRow = -1;
+
+    if (gameState) {
+      gameState.map.forEach((row, rowIndex) => {
+        row.forEach((col, colIndex) => {
+          if (col === "X") {
+            goalCol = colIndex + 1;
+            goalRow = rowIndex + 1;
+          }
+        });
+      });
+    }
+
+    return {
+      col: goalCol,
+      row: goalRow,
+    };
+  }, [gameState]);
+
   return (
     <div className={["logs", isLogsExpanded ? "expanded" : ""].join(" ")}>
       <div className="header">Logs</div>
       <div className="content">
-        {gameState &&
-          currentPlayer &&
+        {gameState && currentPlayer && gameState.history.length > 0 ? (
           gameState.history.map((roundHistory, index) => {
             const playerHistory = roundHistory[currentPlayer.id];
 
@@ -25,9 +45,16 @@ export const Logs = () => {
                     You got {playerHistory.item.value} points!
                   </div>
                 )}
+                {currentPlayer.location.row === goalLocation.row &&
+                  currentPlayer.location.col === goalLocation.col && (
+                    <div className="success">You reached the goal!</div>
+                  )}
               </div>
             );
-          })}
+          })
+        ) : (
+          <div className="log-item">No logs.</div>
+        )}
       </div>
       <button
         type="button"

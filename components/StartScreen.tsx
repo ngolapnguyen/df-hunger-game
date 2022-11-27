@@ -69,12 +69,7 @@ export const StartScreen = () => {
       </button>
       <div>Or</div>
       <form className="join-form" onSubmit={onJoin}>
-        <input
-          type="number"
-          name="gameId"
-          placeholder="Enter game ID"
-          ref={gameIdInputRef}
-        />
+        <input name="gameId" placeholder="Enter game ID" ref={gameIdInputRef} />
         <button type="submit" className="play-button" disabled={isLoading}>
           {isLoading ? "Loading..." : "Join"}
         </button>

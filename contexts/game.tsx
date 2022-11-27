@@ -1,9 +1,9 @@
 import { createContext } from "@dwarvesf/react-utils";
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { useFetchWithCache } from "../hooks/useFetchWithCache";
 import { client, GET_PATHS } from "../libs/apis";
-import { Game, MoveType, Player } from "../types/game";
+import { Game, GameStatus, MoveType, Player } from "../types/game";
 
 interface GameContextValues {
   gameId: string;
@@ -16,6 +16,7 @@ interface GameContextValues {
   setPlayerToken: (token: string) => void;
   setNextMove: (move: MoveType) => void;
   quitGame: () => void;
+  mutateGameState: () => void;
 }
 
 export const GAME_ID_KEY = "hg-game-id";
@@ -31,7 +32,11 @@ const GameContextProvider = ({ children }: PropsWithChildren) => {
     Cookies.get(PLAYER_TOKEN_KEY) || ""
   );
 
-  const { data, loading: isLoadingGameState } = useFetchWithCache(
+  const {
+    data,
+    loading: isLoadingGameState,
+    mutate: mutateGameState,
+  } = useFetchWithCache(
     [GET_PATHS.gameDetail(gameId)],
     () => (gameId ? client.getGameDetail(gameId) : undefined),
     {
@@ -56,9 +61,16 @@ const GameContextProvider = ({ children }: PropsWithChildren) => {
   };
 
   const quitGame = () => {
-    setGameId("");
-    setPlayerToken("");
+    if (window.confirm("Are you sure you want to quit the game?")) {
+      setGameId("");
+      setPlayerToken("");
+      window.location.reload();
+    }
   };
+
+  useEffect(() => {
+    setNextMove(undefined);
+  }, [gameState?.round_expire_at, gameState?.status]); // eslint-disable-line
 
   return (
     <Provider
@@ -73,6 +85,7 @@ const GameContextProvider = ({ children }: PropsWithChildren) => {
         setPlayerToken,
         setNextMove,
         quitGame,
+        mutateGameState,
       }}
     >
       {children}

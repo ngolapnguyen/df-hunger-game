@@ -1,4 +1,4 @@
-import { Game, Player } from "../types/game";
+import { Game, MoveType, Player } from "../types/game";
 import fetcher from "./fetcher";
 
 const BASE_URL = process.env.BASE_URL || "http://51.79.240.41:4000";
@@ -17,12 +17,15 @@ class Client {
     "Content-Type": "application/json",
   };
 
-  public createNewGame() {
+  public createNewGame(game = null) {
     return fetcher<Response<Game>>(`${BASE_URL}/api/game`, {
       method: "POST",
       headers: {
         ...this.headers,
       },
+      body: JSON.stringify({
+        game,
+      }),
     });
   }
 
@@ -40,6 +43,28 @@ class Client {
       headers: {
         ...this.headers,
       },
+    });
+  }
+
+  public startGame(id: string) {
+    return fetcher<Response<Game>>(`${BASE_URL}/api/game/${id}/start`, {
+      method: "POST",
+      headers: {
+        ...this.headers,
+      },
+    });
+  }
+
+  public submitStep(gameId: string, token: string, action: MoveType) {
+    return fetcher<Response<Game>>(`${BASE_URL}/api/game/${gameId}/round`, {
+      method: "POST",
+      headers: {
+        ...this.headers,
+      },
+      body: JSON.stringify({
+        token,
+        action,
+      }),
     });
   }
 }

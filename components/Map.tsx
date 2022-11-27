@@ -1,10 +1,13 @@
 import Lottie from "lottie-react";
 import Image from "next/image";
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import arrowAnimation from "../assets/lottie/arrow.json";
 import explosionAnimation from "../assets/lottie/explosion.json";
 import { MOVE_OFFSET } from "../constants/move";
 import { useGameContext } from "../contexts/game";
+import { GameStatus } from "../types/game";
+import { dist } from "../utils/points";
+import { WinScreen } from "./WinScreen";
 
 const ISLAND_SIZE = 16;
 const PLAYGROUND_SIZE = 12;
@@ -12,6 +15,28 @@ const GRID_ITEM_SIZE = 48;
 
 export const Map = () => {
   const { gameState, currentPlayer, nextMove } = useGameContext();
+  const playerFacingDirections = useRef<Record<string, string>>({});
+
+  const goalLocation = useMemo(() => {
+    let goalCol = -1;
+    let goalRow = -1;
+
+    if (gameState) {
+      gameState.map.forEach((row, rowIndex) => {
+        row.forEach((col, colIndex) => {
+          if (col === "X") {
+            goalCol = colIndex + 1;
+            goalRow = rowIndex + 1;
+          }
+        });
+      });
+    }
+
+    return {
+      col: goalCol,
+      row: goalRow,
+    };
+  }, [gameState]);
 
   const nextMoveLocation = useMemo(() => {
     if (!currentPlayer || !nextMove) {
@@ -23,6 +48,50 @@ export const Map = () => {
       row: currentPlayer.location.row + MOVE_OFFSET[nextMove][1],
     };
   }, [currentPlayer, nextMove]);
+
+  const winner = useMemo(() => {
+    if (gameState?.status === GameStatus.COMPLETED) {
+      let winner = gameState.players[0];
+
+      gameState.players.forEach((player) => {
+        // Update winner if this player has higher points than the last ones
+        if (player.points > winner.points) {
+          winner = player;
+        }
+
+        // If points are equal, check which one is nearer to the goal
+        if (
+          // player.points === winner.points &&
+          dist(
+            [goalLocation.col!, goalLocation.row!],
+            [player.location.col, player.location.row]
+          ) <
+          dist(
+            [goalLocation.col!, goalLocation.row!],
+            [winner.location.col, winner.location.row]
+          )
+        ) {
+          winner = player;
+        }
+      });
+
+      return winner;
+    }
+  }, [gameState, goalLocation]);
+
+  useEffect(() => {
+    if (gameState?.id && gameState?.status === GameStatus.NEW) {
+      playerFacingDirections.current = gameState.players.reduce(
+        (result, current, index) => {
+          return {
+            ...result,
+            [current.id]: index % 2 === 1 ? "face-left" : "face-right",
+          };
+        },
+        {}
+      );
+    }
+  }, [gameState?.id]); // eslint-disable-line
 
   return (
     <>
@@ -43,38 +112,55 @@ export const Map = () => {
                 const isNext =
                   currentPlayer &&
                   nextMoveLocation &&
-                  colIndex === nextMoveLocation.col &&
-                  rowIndex === nextMoveLocation.row;
+                  colIndex === nextMoveLocation.col - 1 &&
+                  rowIndex === nextMoveLocation.row - 1;
 
                 const cellValue = gameState?.map[rowIndex][colIndex];
-                const isGoal = cellValue === "X";
 
                 return (
                   <div
                     className={["col", isNext ? "next" : ""].join(" ")}
                     key={colIndex}
                   >
-                    {isGoal ? (
-                      <Image
-                        width={64}
-                        height={64}
-                        src="/assets/images/portal.webp"
-                        alt="goal"
-                        className="goal"
-                      />
-                    ) : (
-                      cellValue
-                    )}
+                    <span className="cell-value">{cellValue}</span>
                   </div>
                 );
               })}
             </div>
           ))}
         </div>
+        {goalLocation && (
+          <div
+            className="goal"
+            style={{
+              left: (goalLocation.col - 1) * GRID_ITEM_SIZE,
+              top: (goalLocation.row - 1) * GRID_ITEM_SIZE,
+            }}
+          >
+            <Image
+              width={64}
+              height={64}
+              src="/assets/images/portal.webp"
+              alt="goal"
+              className="goal-image"
+            />
+          </div>
+        )}
+        {nextMoveLocation && (
+          <div
+            className="arrow"
+            style={{
+              left: (nextMoveLocation.col - 1) * GRID_ITEM_SIZE,
+              top: (nextMoveLocation.row - 1) * GRID_ITEM_SIZE,
+            }}
+          >
+            <Lottie animationData={arrowAnimation} />
+          </div>
+        )}
         {gameState &&
           // Find the players hit by bomb in prev round
           Object.keys(gameState.prev_round).map((playerId) => {
-            const wasHit = gameState.prev_round[playerId].got_boom;
+            const wasHit = gameState.prev_round[playerId]?.got_boom;
             const playerLocation = gameState.players.find(
               (player) => player.id === playerId
             )?.location;
@@ -99,42 +185,42 @@ export const Map = () => {
         <div className="players">
           {gameState?.players.map((player, index) => {
             // Was player hit by bomb in prev round?
-            const wasHit = gameState.prev_round[player.id].got_boom;
+            const wasHit = gameState.prev_round[player.id]?.got_boom;
 
             // Decide which direction the avatar is facing
-            let direction = "";
-            if (gameState.prev_round[player.id].action_result === "left") {
-              direction = "face-left";
+            if (gameState.prev_round[player.id]?.action_result === "left") {
+              playerFacingDirections.current[player.id] = "face-left";
+            } else if (
+              gameState.prev_round[player.id]?.action_result === "right"
+            ) {
+              playerFacingDirections.current[player.id] = "face-right";
             }
 
             return (
               <div
-                className={["player", wasHit ? "hit" : "idle", direction].join(
-                  " "
-                )}
+                className={[
+                  "player",
+                  wasHit ? "hit" : "idle",
+                  playerFacingDirections.current[player.id],
+                ].join(" ")}
                 key={player.id}
                 style={{
                   left: (player.location.col - 1) * GRID_ITEM_SIZE,
                   top: (player.location.row - 1) * GRID_ITEM_SIZE,
                 }}
               >
-                <div className="nametag">Player {index}</div>
+                <div className="nametag">
+                  {player.id === currentPlayer?.id ? "You" : `Player ${index}`}
+                </div>
+                {winner?.id === player.id && (
+                  <div className="winner-tag">🎉Winner🎉</div>
+                )}
               </div>
             );
           })}
         </div>
-        {nextMoveLocation && (
-          <div
-            className="arrow"
-            style={{
-              left: nextMoveLocation.col * GRID_ITEM_SIZE,
-              top: nextMoveLocation.row * GRID_ITEM_SIZE,
-            }}
-          >
-            <Lottie animationData={arrowAnimation} />
-          </div>
-        )}
       </div>
+      {winner && winner.id === currentPlayer?.id && <WinScreen />}
     </>
   );
 };
