@@ -17,27 +17,6 @@ export const Map = () => {
   const { gameState, currentPlayer, nextMove } = useGameContext();
   const playerFacingDirections = useRef<Record<string, string>>({});
 
-  const goalLocation = useMemo(() => {
-    let goalCol = -1;
-    let goalRow = -1;
-
-    if (gameState) {
-      gameState.map.forEach((row, rowIndex) => {
-        row.forEach((col, colIndex) => {
-          if (col === "X") {
-            goalCol = colIndex + 1;
-            goalRow = rowIndex + 1;
-          }
-        });
-      });
-    }
-
-    return {
-      col: goalCol,
-      row: goalRow,
-    };
-  }, [gameState]);
-
   const nextMoveLocation = useMemo(() => {
     if (!currentPlayer || !nextMove) {
       return undefined;
@@ -59,17 +38,20 @@ export const Map = () => {
           winner = player;
         }
 
-        // If points are equal, check which one is nearer to the goal
+        // If points are equal, and we are playing with only 1 goal
+        // check which one is nearer to the goal
         if (
-          // player.points === winner.points &&
+          gameState.goal.length === 1! &&
+          gameState.goal[0].player_id &&
+          player.points === winner.points &&
           dist(
-            [goalLocation.col!, goalLocation.row!],
+            [gameState.goal[0].location.col, gameState.goal[0].location.row],
             [player.location.col, player.location.row]
           ) <
-          dist(
-            [goalLocation.col!, goalLocation.row!],
-            [winner.location.col, winner.location.row]
-          )
+            dist(
+              [gameState.goal[0].location.col, gameState.goal[0].location.row],
+              [winner.location.col, winner.location.row]
+            )
         ) {
           winner = player;
         }
@@ -77,7 +59,7 @@ export const Map = () => {
 
       return winner;
     }
-  }, [gameState, goalLocation]);
+  }, [gameState]);
 
   useEffect(() => {
     if (gameState?.id && gameState?.status === GameStatus.NEW) {
@@ -129,21 +111,28 @@ export const Map = () => {
             </div>
           ))}
         </div>
-        {goalLocation && (
-          <div
-            className="goal"
-            style={{
-              left: (goalLocation.col - 1) * GRID_ITEM_SIZE,
-              top: (goalLocation.row - 1) * GRID_ITEM_SIZE,
-            }}
-          >
-            <Image
-              width={64}
-              height={64}
-              src="/assets/images/portal.webp"
-              alt="goal"
-              className="goal-image"
-            />
+        {gameState && (
+          <div className="goals">
+            {gameState.goal.map((goal, index) => {
+              return (
+                <div
+                  key={index}
+                  className={`goal ${goal.player_id || ""}`}
+                  style={{
+                    left: (goal.location.col - 1) * GRID_ITEM_SIZE,
+                    top: (goal.location.row - 1) * GRID_ITEM_SIZE,
+                  }}
+                >
+                  <Image
+                    width={64}
+                    height={64}
+                    src="/assets/images/portal.webp"
+                    alt="goal"
+                    className="goal-image"
+                  />
+                </div>
+              );
+            })}
           </div>
         )}
         {nextMoveLocation && (

@@ -30,6 +30,7 @@ export interface Game {
   round_expire_at: string;
   status: GameStatus;
   history: Record<string, MoveHistory>[];
+  goal: Goal[];
 }
 
 export interface Player {
@@ -54,4 +55,12 @@ export interface MoveHistory {
 export interface Item {
   type: "item";
   value: number;
+}
+
+export interface Goal {
+  player_id: string | null;
+  location: {
+    row: number;
+    col: number;
+  };
 }

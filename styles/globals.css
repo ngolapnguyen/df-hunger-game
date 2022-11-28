@@ -510,11 +510,35 @@ input[type=number] {
 
 /* Goal */
 
+.goals {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 .goal {
   position: absolute;
   width: 72px;
   height: 72px;
   transform: translate(-12.5%, -33.33%);
+}
+
+.goal.a {
+  filter: hue-rotate(0deg)
+}
+
+.goal.b {
+  filter: hue-rotate(145deg)
+}
+
+.goal.c {
+  filter: hue-rotate(200deg)
+}
+
+.goal.d {
+  filter: hue-rotate(250deg)
 }
 
 /* Cell Value */
