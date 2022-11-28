@@ -11,7 +11,6 @@ import { WinScreen } from "./WinScreen";
 
 const ISLAND_SIZE = 16;
 const PLAYGROUND_SIZE = 12;
-const GRID_ITEM_SIZE = 48;
 
 export const Map = () => {
   const { gameState, currentPlayer, nextMove } = useGameContext();
@@ -131,8 +130,8 @@ export const Map = () => {
                   key={index}
                   className={`goal ${goal.player_id || ""}`}
                   style={{
-                    left: (goal.location.col - 1) * GRID_ITEM_SIZE,
-                    top: (goal.location.row - 1) * GRID_ITEM_SIZE,
+                    left: goal.location.col - 1 + "rem",
+                    top: goal.location.row - 1 + "rem",
                   }}
                 >
                   {/* eslint-disable-next-line */}
@@ -150,8 +149,8 @@ export const Map = () => {
           <div
             className="arrow"
             style={{
-              left: (nextMoveLocation.col - 1) * GRID_ITEM_SIZE,
-              top: (nextMoveLocation.row - 1) * GRID_ITEM_SIZE,
+              left: nextMoveLocation.col - 1 + "rem",
+              top: nextMoveLocation.row - 1 + "rem",
             }}
           >
             <Lottie animationData={arrowAnimation} />
@@ -171,8 +170,8 @@ export const Map = () => {
                   className="bomb"
                   key={`${playerId}-bomb`}
                   style={{
-                    left: (playerLocation.col - 1) * GRID_ITEM_SIZE,
-                    top: (playerLocation.row - 1) * GRID_ITEM_SIZE,
+                    left: playerLocation.col - 1 + "rem",
+                    top: playerLocation.row - 1 + "rem",
                   }}
                 >
                   <Lottie animationData={explosionAnimation} />
@@ -205,8 +204,8 @@ export const Map = () => {
                 ].join(" ")}
                 key={player.id}
                 style={{
-                  left: (player.location.col - 1) * GRID_ITEM_SIZE,
-                  top: (player.location.row - 1) * GRID_ITEM_SIZE,
+                  left: player.location.col - 1 + "rem",
+                  top: player.location.row - 1 + "rem",
                 }}
               >
                 <div className="nametag">
