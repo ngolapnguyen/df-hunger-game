@@ -244,7 +244,7 @@ input[type=number] {
 .nametag {
   font-size: 12px;
   width: 64px;
-  height: 24px;
+  height: 28px;
   box-shadow: 0 0 5px black;
   border-radius: 4px;
   background: white;
@@ -414,6 +414,14 @@ input[type=number] {
   align-items: flex-start;
 }
 
+.left-corner .items {
+  margin-bottom: 24px;
+}
+
+.left-corner .items > span {
+  margin-right: 40px;
+}
+
 /* Points */
 
 .points {
@@ -543,8 +551,36 @@ input[type=number] {
 
 /* Cell Value */
 
-.cell-value {
-  display: none;
+.grid .item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.item {
+  width: 32px;
+  height: 32px;
+  background-image: url('/assets/spritesheets/items/foods.png');
+  background-size: 128px;
+  background-position-x: 0px;
+  background-position-y: -32px;
+  display: inline-block;
+}
+
+.item.point-4 {
+  background-position-x: 0px;
+  background-position-y: -96px;
+}
+
+.item.point-8 {
+  background-position-x: -64px;
+  background-position-y: -32px;
+}
+
+.item.point-16 {
+  background-position-x: -96px;
+  background-position-y: -96px;
 }
 
 /* Winner */

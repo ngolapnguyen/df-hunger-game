@@ -3,7 +3,8 @@ import { useGameContext } from "../contexts/game";
 import { client } from "../libs/apis";
 
 export const RightCorner = () => {
-  const { gameState, quitGame, mutateGameState } = useGameContext();
+  const { gameState, currentPlayer, quitGame, mutateGameState } =
+    useGameContext();
   const [isLoading, setIsLoading] = useState(false);
 
   const [isAudioOff, setIsAudioOff] = useState(true);
@@ -41,7 +42,8 @@ export const RightCorner = () => {
       {gameState && (
         <>
           <div>
-            {gameState.status === "new" ? (
+            {gameState.status === "new" &&
+            gameState.players[0].id === currentPlayer?.id ? (
               <button
                 type="button"
                 className="quit-button"

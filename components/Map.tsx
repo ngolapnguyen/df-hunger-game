@@ -98,13 +98,25 @@ export const Map = () => {
                   rowIndex === nextMoveLocation.row - 1;
 
                 const cellValue = gameState?.map[rowIndex][colIndex];
+                let point = 0;
+                try {
+                  point = parseInt(cellValue as string);
+                } catch {
+                  // do nothing
+                }
 
                 return (
                   <div
                     className={["col", isNext ? "next" : ""].join(" ")}
                     key={colIndex}
                   >
-                    <span className="cell-value">{cellValue}</span>
+                    {point > 0 && (
+                      <span
+                        className={["item", `point-${point.toString()}`].join(
+                          " "
+                        )}
+                      />
+                    )}
                   </div>
                 );
               })}
@@ -199,7 +211,9 @@ export const Map = () => {
                 }}
               >
                 <div className="nametag">
-                  {player.id === currentPlayer?.id ? "You" : `Player ${index}`}
+                  {player.id === currentPlayer?.id ? "You" : <>P{index + 1}</>}
+                  <br />
+                  {player.points}
                 </div>
                 {winner?.id === player.id && (
                   <div className="winner-tag">🎉Winner🎉</div>

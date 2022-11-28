@@ -15,6 +15,20 @@ export const LeftCorner = () => {
   return (
     <div className="left-corner">
       <div className="points">Points: {currentPlayer?.points || 0}</div>
+      <div className="items">
+        <span>
+          <span className="item point-2" />: 2
+        </span>
+        <span>
+          <span className="item point-4" />: 4
+        </span>
+        <span>
+          <span className="item point-8" />: 8
+        </span>
+        <span>
+          <span className="item point-16" />: 16
+        </span>
+      </div>
       <div>Game ID: {gameState?.id}</div>
       <div>Game Status: {gameState?.status}</div>
       <div className="rounds">
