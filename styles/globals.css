@@ -533,6 +533,11 @@ input[type=number] {
   transform: translate(-12.5%, -33.33%);
 }
 
+.goal-image {
+  width: 64px;
+  height: 64px;
+}
+
 .goal.a {
   filter: hue-rotate(0deg)
 }

@@ -135,9 +135,8 @@ export const Map = () => {
                     top: (goal.location.row - 1) * GRID_ITEM_SIZE,
                   }}
                 >
-                  <Image
-                    width={64}
-                    height={64}
+                  {/* eslint-disable-next-line */}
+                  <img
                     src="/assets/images/portal.webp"
                     alt="goal"
                     className="goal-image"
