@@ -14,7 +14,9 @@ export const LeftCorner = () => {
 
   return (
     <div className="left-corner">
-      <div className="points">Points: {currentPlayer?.points || 0}</div>
+      {currentPlayer && (
+        <div className="points">Points: {currentPlayer?.points || 0}</div>
+      )}
       <div className="items">
         <span>
           <span className="item point-2" />: 2

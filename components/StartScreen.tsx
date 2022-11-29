@@ -5,6 +5,7 @@ import { client } from "../libs/apis";
 export const StartScreen = () => {
   const gameIdInputRef = useRef<HTMLInputElement>(null);
   const { gameState, setGameId, setPlayerToken } = useGameContext();
+  const [inspecting, setInspecting] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const onNewGame = async () => {
@@ -40,12 +41,14 @@ export const StartScreen = () => {
     try {
       setIsLoading(true);
 
-      // Join the game
-      const joinGameResponse = await client.joinGame(gameId);
-      const playerToken = joinGameResponse.data.token;
+      if (!inspecting) {
+        // Join the game
+        const joinGameResponse = await client.joinGame(gameId);
+        const playerToken = joinGameResponse.data.token;
+        setPlayerToken(playerToken);
+      }
 
       setGameId(gameId);
-      setPlayerToken(playerToken);
     } catch (error) {
       alert(error);
     } finally {
@@ -73,6 +76,15 @@ export const StartScreen = () => {
         <button type="submit" className="play-button" disabled={isLoading}>
           {isLoading ? "Loading..." : "Join"}
         </button>
+        <label htmlFor="inspecting" className="inspecting-input">
+          <input
+            type="checkbox"
+            name="inspecting"
+            onChange={(event) => setInspecting(event.target.checked)}
+            checked={inspecting}
+          />
+          <span>Inspect Only</span>
+        </label>
       </form>
     </div>
   );
