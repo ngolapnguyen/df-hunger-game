@@ -1,5 +1,5 @@
-import { createContext } from "@dwarvesf/react-utils";
-import { PropsWithChildren, useEffect, useState } from "react";
+import { createContext, isSSR } from "@dwarvesf/react-utils";
+import { PropsWithChildren, useEffect, useMemo, useState } from "react";
 import Cookies from "js-cookie";
 import { useFetchWithCache } from "../hooks/useFetchWithCache";
 import { client, GET_PATHS } from "../libs/apis";
@@ -12,6 +12,7 @@ interface GameContextValues {
   gameState?: Game;
   nextMove?: MoveType;
   currentPlayer?: Player;
+  isInspecting?: boolean;
   setGameId: (id: string) => void;
   setPlayerToken: (token: string) => void;
   setNextMove: (move: MoveType) => void;
@@ -31,6 +32,7 @@ const GameContextProvider = ({ children }: PropsWithChildren) => {
   const [playerToken, _setPlayerToken] = useState(
     Cookies.get(PLAYER_TOKEN_KEY) || ""
   );
+  const [isInspecting, setIsInspecting] = useState(false);
 
   const {
     data,
@@ -40,7 +42,7 @@ const GameContextProvider = ({ children }: PropsWithChildren) => {
     [GET_PATHS.gameDetail(gameId)],
     () => (gameId ? client.getGameDetail(gameId) : undefined),
     {
-      refreshInterval: 3000,
+      refreshInterval: 1000,
     }
   );
   const gameState = data?.data;
@@ -72,6 +74,16 @@ const GameContextProvider = ({ children }: PropsWithChildren) => {
     setNextMove(undefined);
   }, [gameState?.round_expire_at, gameState?.status]); // eslint-disable-line
 
+  useEffect(() => {
+    if (gameId) {
+      if (!currentPlayer) {
+        setIsInspecting(true);
+      } else {
+        setIsInspecting(false);
+      }
+    }
+  }, [gameId, currentPlayer]);
+
   return (
     <Provider
       value={{
@@ -81,6 +93,7 @@ const GameContextProvider = ({ children }: PropsWithChildren) => {
         gameState,
         nextMove,
         currentPlayer,
+        isInspecting,
         setGameId,
         setPlayerToken,
         setNextMove,

@@ -1,51 +1,108 @@
+import { useEffect, useMemo, useState } from "react";
 import { useGameContext } from "../contexts/game";
 import { client } from "../libs/apis";
+import debounce from "lodash.debounce";
 
 export const MovementControls = () => {
-  const { gameState, nextMove, currentPlayer, setNextMove } = useGameContext();
+  const { gameState, nextMove, currentPlayer, isInspecting, setNextMove } =
+    useGameContext();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onMove = async (move: any) => {
-    if (!gameState || !currentPlayer) {
-      return;
-    }
+  const updateMove = useMemo(
+    () =>
+      debounce(async (move: any) => {
+        try {
+          setIsLoading(true);
+          await client.submitStep(gameState!.id, currentPlayer!.token, move);
+        } catch (error) {
+          alert(error);
+        } finally {
+          setIsLoading(false);
+        }
+      }, 300),
+    [currentPlayer, gameState]
+  );
 
-    if (window.confirm(`Are you sure you want to move ${move}?`)) {
-      setNextMove(move);
-      await client.submitStep(gameState?.id, currentPlayer?.token, move);
-    }
-  };
+  const onMove = useMemo(
+    () =>
+      debounce(async (move: any) => {
+        if (!gameState || !currentPlayer || gameState.status !== "playing") {
+          return;
+        }
+
+        setNextMove(move);
+        updateMove(move);
+      }, 300),
+    [gameState, currentPlayer, updateMove, setNextMove]
+  );
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      switch (event.key) {
+        case "ArrowUp": {
+          onMove("up");
+          break;
+        }
+        case "ArrowDown": {
+          onMove("down");
+          break;
+        }
+        case "ArrowLeft": {
+          onMove("left");
+          break;
+        }
+        case "ArrowRight": {
+          onMove("right");
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [onMove]);
+
+  if (isInspecting) {
+    return null;
+  }
 
   return (
     <div className="movement-controls">
       <button
         type="button"
-        className="up"
+        className={["up", nextMove === "up" ? "selected" : ""].join(" ")}
         onClick={() => onMove("up")}
-        disabled={Boolean(nextMove)}
+        disabled={isLoading}
       >
         Up
       </button>
       <button
         type="button"
-        className="down"
+        className={["down", nextMove === "down" ? "selected" : ""].join(" ")}
         onClick={() => onMove("down")}
-        disabled={Boolean(nextMove)}
+        disabled={isLoading}
       >
         Down
       </button>
       <button
         type="button"
-        className="left"
+        className={["left", nextMove === "left" ? "selected" : ""].join(" ")}
         onClick={() => onMove("left")}
-        disabled={Boolean(nextMove)}
+        disabled={isLoading}
       >
         Left
       </button>
       <button
         type="button"
-        className="right"
+        className={["right", nextMove === "right" ? "selected" : ""].join(" ")}
         onClick={() => onMove("right")}
-        disabled={Boolean(nextMove)}
+        disabled={isLoading}
       >
         Right
       </button>

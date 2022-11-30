@@ -20,11 +20,6 @@ export default function App({ Component, pageProps }: AppProps) {
         />
         <meta property="og:image" content="/thumbnail.jpeg" />
         <meta name="twitter:image" content="/thumbnail.jpeg" />
-
-        <link
-          href="https://fonts.cdnfonts.com/css/arcade-classic"
-          rel="stylesheet"
-        />
       </Head>
       <GameContextProvider>
         <Component {...pageProps} />

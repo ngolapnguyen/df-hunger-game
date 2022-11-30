@@ -1,8 +1,9 @@
 import { useMemo, useState } from "react";
 import { useGameContext } from "../contexts/game";
+import { MoveHistory } from "../types/game";
 
 export const Logs = () => {
-  const { gameState, currentPlayer } = useGameContext();
+  const { gameState, currentPlayer, isInspecting } = useGameContext();
   const [isLogsExpanded, setIsLogsExpanded] = useState(false);
 
   const goalLocation = useMemo(() => {
@@ -26,35 +27,85 @@ export const Logs = () => {
     };
   }, [gameState]);
 
-  return (
-    <div className={["logs", isLogsExpanded ? "expanded" : ""].join(" ")}>
-      <div className="header">Logs</div>
-      <div className="content">
-        {gameState && currentPlayer && gameState.history.length > 0 ? (
-          gameState.history.map((roundHistory, index) => {
-            const playerHistory = roundHistory[currentPlayer.id];
+  const historyByPlayer = useMemo(() => {
+    return (gameState?.history || []).reduce(
+      (result, current) => {
+        const playerIds = Object.keys(current);
+        const nextResult = { ...result };
 
+        playerIds.forEach((playerId) => {
+          nextResult[playerId] = [
+            ...(nextResult[playerId] || []),
+            current[playerId],
+          ];
+        });
+
+        return nextResult;
+      },
+      {
+        a: [],
+        b: [],
+        c: [],
+        d: [],
+      } as Record<string, MoveHistory[]>
+    );
+  }, [gameState]);
+
+  return (
+    <div className={["logs", isInspecting ? "inspecting" : ""].join(" ")}>
+      <div className="logs-container">
+        {Object.keys(historyByPlayer)
+          .filter(
+            (playerId) =>
+              isInspecting || (!isInspecting && playerId === currentPlayer?.id)
+          )
+          .map((playerId, index) => {
             return (
-              <div className="log-item" key={index}>
-                You {playerHistory.action} {playerHistory.action_result}.
-                {playerHistory.got_boom && (
-                  <div className="danger">You hit a bomb!</div>
-                )}
-                {playerHistory.item && (
-                  <div className="success">
-                    You got {playerHistory.item.value} points!
-                  </div>
-                )}
-                {currentPlayer.location.row === goalLocation.row &&
-                  currentPlayer.location.col === goalLocation.col && (
-                    <div className="success">You reached the goal!</div>
+              <div
+                className={["log", isLogsExpanded ? "expanded" : ""].join(" ")}
+                key={playerId}
+              >
+                <div className="header">
+                  {isInspecting ? <>{`P${index}`}&nbsp;</> : ""} Logs
+                </div>
+                <div className="content">
+                  {historyByPlayer[playerId].length > 0 ? (
+                    historyByPlayer[playerId].map((history, historyIndex) => {
+                      return (
+                        <div className="log-item" key={historyIndex}>
+                          {isInspecting ? `P${index + 1}` : "You"}{" "}
+                          {history.action} {history.action_result}.
+                          {history.got_boom && (
+                            <div className="danger">
+                              {isInspecting ? `P${index + 1}` : "You"} hit a
+                              bomb!
+                            </div>
+                          )}
+                          {history.item && (
+                            <div className="success">
+                              {isInspecting ? `P${index + 1}` : "You"} got{" "}
+                              {history.item.value} points!
+                            </div>
+                          )}
+                          {playerId === currentPlayer?.id &&
+                            currentPlayer?.location.row === goalLocation.row &&
+                            currentPlayer?.location.col ===
+                              goalLocation.col && (
+                              <div className="success">
+                                {isInspecting ? `P${index + 1}` : "You"} reached
+                                the goal!
+                              </div>
+                            )}
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <div className="log-item">No logs.</div>
                   )}
+                </div>
               </div>
             );
-          })
-        ) : (
-          <div className="log-item">No logs.</div>
-        )}
+          })}
       </div>
       <button
         type="button"
