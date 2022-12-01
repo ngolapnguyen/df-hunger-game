@@ -48,7 +48,7 @@ export interface MoveHistory {
   action: "move";
   action_request: MoveType;
   action_result: MoveType;
-  got_boom: boolean;
+  got_bomb: boolean;
   item: null | Item;
 }
 

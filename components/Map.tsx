@@ -159,7 +159,7 @@ export const Map = () => {
         {gameState &&
           // Find the players hit by bomb in prev round
           Object.keys(gameState.prev_round).map((playerId) => {
-            const wasHit = gameState.prev_round[playerId]?.got_boom;
+            const wasHit = gameState.prev_round[playerId]?.got_bomb;
             const playerLocation = gameState.players.find(
               (player) => player.id === playerId
             )?.location;
@@ -184,7 +184,7 @@ export const Map = () => {
         <div className="players">
           {gameState?.players.map((player, index) => {
             // Was player hit by bomb in prev round?
-            const wasHit = gameState.prev_round[player.id]?.got_boom;
+            const wasHit = gameState.prev_round[player.id]?.got_bomb;
 
             // Decide which direction the avatar is facing
             if (gameState.prev_round[player.id]?.action_result === "left") {

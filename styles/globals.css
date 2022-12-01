@@ -199,8 +199,8 @@ input[type=number] {
 }
 
 @keyframes player-hit-sprites {
-  from { background-position: -21rem; }
-  to { background-position: -23rem; }
+  from { background-position: -19.5rem; }
+  to { background-position: -24rem; }
 }
 
 .player {

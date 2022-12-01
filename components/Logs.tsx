@@ -75,7 +75,7 @@ export const Logs = () => {
                         <div className="log-item" key={historyIndex}>
                           {isInspecting ? `P${index + 1}` : "You"}{" "}
                           {history.action} {history.action_result}.
-                          {history.got_boom && (
+                          {history.got_bomb && (
                             <div className="danger">
                               {isInspecting ? `P${index + 1}` : "You"} hit a
                               bomb!
