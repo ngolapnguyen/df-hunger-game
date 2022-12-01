@@ -437,7 +437,7 @@ input[type=number] {
   position: absolute;
   top: 1rem;
   left: 1rem;
-  font-size: 0.5rem;
+  font-size: 0.75rem;
   color: white;
   line-height: 1;
   display: flex;
@@ -465,12 +465,21 @@ input[type=number] {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 1rem;
 }
 
 .rounds .loader {
   width: 0.75rem;
   height: 0.75rem;
   margin-left: 0.125rem;
+}
+
+.rounds .countdown {
+  font-size: 1rem;
+}
+
+.rounds .countdown small {
+  font-size: 0.75rem;
 }
 
 /* Start Screen */
