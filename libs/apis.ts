@@ -1,7 +1,7 @@
 import { Game, MoveType, Player } from "../types/game";
 import fetcher from "./fetcher";
 
-const BASE_URL = process.env.BASE_URL || "http://51.79.240.41:4000";
+const BASE_URL = process.env.BASE_URL || "https://hunger.fly.dev";
 
 export interface Response<T> {
   data: T;
@@ -37,12 +37,15 @@ class Client {
     });
   }
 
-  public joinGame(id: string) {
+  public joinGame(id: string, name?: string) {
     return fetcher<Response<Player>>(`${BASE_URL}/api/game/${id}/player`, {
       method: "POST",
       headers: {
         ...this.headers,
       },
+      body: JSON.stringify({
+        name,
+      }),
     });
   }
 

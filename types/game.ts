@@ -42,6 +42,7 @@ export interface Player {
   points: number;
   status: PlayerStatus;
   token: string;
+  name?: string;
 }
 
 export interface MoveHistory {

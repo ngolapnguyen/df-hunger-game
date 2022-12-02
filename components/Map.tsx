@@ -209,7 +209,11 @@ export const Map = () => {
                 }}
               >
                 <div className="nametag">
-                  {player.id === currentPlayer?.id ? "You" : <>P{index + 1}</>}
+                  {player.id === currentPlayer?.id ? (
+                    "You"
+                  ) : (
+                    <>{player.name ? player.name : `P${index + 1}`}</>
+                  )}
                   <br />
                   {player.points}
                 </div>

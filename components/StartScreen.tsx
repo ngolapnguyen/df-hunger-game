@@ -3,12 +3,16 @@ import { useGameContext } from "../contexts/game";
 import { client } from "../libs/apis";
 
 export const StartScreen = () => {
+  const playerNameInputRef = useRef<HTMLInputElement>(null);
   const gameIdInputRef = useRef<HTMLInputElement>(null);
+
   const { gameState, setGameId, setPlayerToken } = useGameContext();
   const [inspecting, setInspecting] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const onNewGame = async () => {
+    const playerName = playerNameInputRef.current?.value || "";
+
     try {
       setIsLoading(true);
 
@@ -17,7 +21,7 @@ export const StartScreen = () => {
       const gameId = newGameResponse.data.id;
 
       // Join the game
-      const joinGameResponse = await client.joinGame(gameId);
+      const joinGameResponse = await client.joinGame(gameId, playerName);
       const playerToken = joinGameResponse.data.token;
 
       setGameId(gameId);
@@ -32,6 +36,7 @@ export const StartScreen = () => {
   const onJoin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    const playerName = playerNameInputRef.current?.value || "";
     const gameId = gameIdInputRef.current?.value || "";
 
     if (!gameId) {
@@ -43,7 +48,7 @@ export const StartScreen = () => {
 
       if (!inspecting) {
         // Join the game
-        const joinGameResponse = await client.joinGame(gameId);
+        const joinGameResponse = await client.joinGame(gameId, playerName);
         const playerToken = joinGameResponse.data.token;
         setPlayerToken(playerToken);
       }
@@ -62,6 +67,15 @@ export const StartScreen = () => {
 
   return (
     <div className="start-screen">
+      <input
+        name="playerName"
+        ref={playerNameInputRef}
+        placeholder="Enter your name"
+        style={{
+          color: "black",
+        }}
+        maxLength={10}
+      />
       <button
         type="submit"
         className="play-button"

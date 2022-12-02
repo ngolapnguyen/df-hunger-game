@@ -66,7 +66,7 @@ export const Logs = () => {
                 key={playerId}
               >
                 <div className="header">
-                  {isInspecting ? <>{`P${index}`}&nbsp;</> : ""} Logs
+                  {isInspecting ? <>{`P${index + 1}`}&nbsp;</> : ""} Logs
                 </div>
                 <div className="content">
                   {historyByPlayer[playerId].length > 0 ? (
