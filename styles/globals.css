@@ -1,14 +1,11 @@
-@font-face {
-  font-family: 'ArcadeClassic';
-  src: url('/assets/fonts/arcade-classic.ttf');
-}
-
-html, body, #__next {
+html,
+body,
+#__next {
   width: 100%;
   height: 100%;
   padding: 0;
   margin: 0;
-  font-family: 'ArcadeClassic', sans-serif;
+  font-family: "Chakra Petch", sans-serif;
   font-size: 48px;
 }
 
@@ -18,7 +15,7 @@ html, body, #__next {
 }
 
 button {
-  font-family: 'ArcadeClassic', sans-serif;
+  font-family: "Chakra Petch", sans-serif;
   color: white;
 }
 
@@ -34,24 +31,25 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 
 @keyframes background-sprites {
-  to { background-position: -16rem; }
+  to {
+    background-position: -16rem;
+  }
 }
 
 .game-container {
   display: flex;
   width: 100%;
   height: 100%;
-  background-image: url('/assets/spritesheets/terrains/water.png');
+  background-image: url("/assets/spritesheets/terrains/water.png");
   background-size: 4rem;
   animation: background-sprites 1.5s steps(3) infinite;
   overflow: hidden;
 }
-
 
 /* Island */
 
@@ -73,10 +71,10 @@ input[type=number] {
 .island .col {
   width: 1rem;
   height: 1rem;
-  background-image: url('/assets/spritesheets/terrains/grass.png');
+  background-image: url("/assets/spritesheets/terrains/grass.png");
   background-size: 6rem;
   background-position-y: -6rem;
-} 
+}
 
 .island .row:first-of-type .col {
   background-position-x: -1rem;
@@ -98,22 +96,22 @@ input[type=number] {
   background-position-y: -2rem;
 }
 
-.island .row:first-of-type .col:first-of-type { 
+.island .row:first-of-type .col:first-of-type {
   background-position-x: 0;
   background-position-y: 0;
 }
 
-.island .row:first-of-type .col:last-of-type { 
+.island .row:first-of-type .col:last-of-type {
   background-position-x: -2rem;
   background-position-y: 0;
 }
 
-.island .row:last-of-type .col:first-of-type { 
+.island .row:last-of-type .col:first-of-type {
   background-position-x: 0;
   background-position-y: -2rem;
 }
 
-.island .row:last-of-type .col:last-of-type { 
+.island .row:last-of-type .col:last-of-type {
   background-position-x: -2rem;
   background-position-y: -2rem;
 }
@@ -144,7 +142,7 @@ input[type=number] {
 .playground .col {
   width: 1rem;
   height: 1rem;
-  background-image: url('/assets/spritesheets/terrains/dirt.png');
+  background-image: url("/assets/spritesheets/terrains/dirt.png");
   background-size: 8rem;
   background-position-y: -1rem;
   background-position-x: -1rem;
@@ -152,7 +150,7 @@ input[type=number] {
 
 .playground .row:nth-of-type(2n) .col:nth-of-type(2n + 1)::before,
 .playground .row:nth-of-type(2n + 1) .col:nth-of-type(2n)::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -167,13 +165,19 @@ input[type=number] {
 }
 
 @keyframes flicker {
-  0% { opacity: 1; }
-  50% { opacity: 0.5; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .playground .col.next::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -194,13 +198,21 @@ input[type=number] {
 }
 
 @keyframes player-idle-sprites {
-  from { background-position: 0 }
-  to { background-position: -6rem; }
+  from {
+    background-position: 0;
+  }
+  to {
+    background-position: -6rem;
+  }
 }
 
 @keyframes player-hit-sprites {
-  from { background-position: -19.5rem; }
-  to { background-position: -24rem; }
+  from {
+    background-position: -19.5rem;
+  }
+  to {
+    background-position: -24rem;
+  }
 }
 
 .player {
@@ -212,7 +224,7 @@ input[type=number] {
 }
 
 .player::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -222,19 +234,19 @@ input[type=number] {
 }
 
 .player:nth-of-type(1)::before {
-  background-image: url('/assets/spritesheets/players/1.png');
+  background-image: url("/assets/spritesheets/players/1.png");
 }
 
 .player:nth-of-type(2)::before {
-  background-image: url('/assets/spritesheets/players/2.png');
+  background-image: url("/assets/spritesheets/players/2.png");
 }
 
 .player:nth-of-type(3)::before {
-  background-image: url('/assets/spritesheets/players/3.png');
+  background-image: url("/assets/spritesheets/players/3.png");
 }
 
 .player:nth-of-type(4)::before {
-  background-image: url('/assets/spritesheets/players/4.png');
+  background-image: url("/assets/spritesheets/players/4.png");
 }
 
 .player.idle::before {
@@ -296,7 +308,7 @@ input[type=number] {
   height: 2rem;
   cursor: pointer;
   position: absolute;
-  background-image: url('/assets/spritesheets/controls/buttons.png');
+  background-image: url("/assets/spritesheets/controls/buttons.png");
   background-size: 6rem;
   background-position-x: -0.5rem;
   background-position-y: -6.5rem;
@@ -363,7 +375,7 @@ input[type=number] {
 .log {
   width: 10rem;
   height: 10rem;
-  background-image: url('/assets/spritesheets/controls/setting-menu.png');
+  background-image: url("/assets/spritesheets/controls/setting-menu.png");
   background-size: 22.5rem;
   background-position-x: -12rem;
   background-position-y: -1rem;
@@ -423,7 +435,7 @@ input[type=number] {
   right: -1.25rem;
   width: 1rem;
   height: 1rem;
-  background-image: url('/assets/spritesheets/controls/buttons.png');
+  background-image: url("/assets/spritesheets/controls/buttons.png");
   background-size: 3rem;
   background-position-x: -0.25rem;
   background-position-y: -1.75rem;
@@ -517,7 +529,7 @@ input[type=number] {
 .play-button {
   width: 4rem;
   height: 1.3333rem;
-  background-image: url('/assets/spritesheets/controls/play-button.png');
+  background-image: url("/assets/spritesheets/controls/play-button.png");
   background-size: 8rem;
   background-color: transparent;
   border: 0;
@@ -551,7 +563,7 @@ input[type=number] {
 .right-corner .quit-button {
   width: 3rem;
   height: 1rem;
-  background-image: url('/assets/spritesheets/controls/play-button.png');
+  background-image: url("/assets/spritesheets/controls/play-button.png");
   background-size: 6.125rem;
   background-color: transparent;
   border: 0;
@@ -583,19 +595,19 @@ input[type=number] {
 }
 
 .goal.a {
-  filter: hue-rotate(0deg)
+  filter: hue-rotate(0deg);
 }
 
 .goal.b {
-  filter: hue-rotate(145deg)
+  filter: hue-rotate(145deg);
 }
 
 .goal.c {
-  filter: hue-rotate(200deg)
+  filter: hue-rotate(200deg);
 }
 
 .goal.d {
-  filter: hue-rotate(250deg)
+  filter: hue-rotate(250deg);
 }
 
 /* Cell Value */
@@ -610,7 +622,7 @@ input[type=number] {
 .item {
   width: 0.75rem;
   height: 0.75rem;
-  background-image: url('/assets/spritesheets/items/foods.png');
+  background-image: url("/assets/spritesheets/items/foods.png");
   background-size: 3rem;
   background-position-x: 0;
   background-position-y: -0.75rem;
@@ -680,7 +692,9 @@ input[type=number] {
 }
 
 @media only screen and (max-width: 1599px) {
-  html, body, #_next {
+  html,
+  body,
+  #_next {
     font-size: 32px;
   }
 
@@ -691,7 +705,9 @@ input[type=number] {
 }
 
 @media only screen and (max-width: 991px) {
-  html, body, #_next {
+  html,
+  body,
+  #_next {
     font-size: 24px;
   }
 
@@ -700,7 +716,6 @@ input[type=number] {
     height: 12px;
   }
 }
-
 
 @media only screen and (max-width: 400px) {
   .left-corner {
