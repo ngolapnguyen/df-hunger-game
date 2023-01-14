@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body,
 #__next {
@@ -19,9 +23,9 @@ button {
   color: white;
 }
 
-button:hover {
+/* button:hover {
   opacity: 0.8;
-}
+} */
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -45,9 +49,11 @@ input[type="number"] {
   display: flex;
   width: 100%;
   height: 100%;
-  background-image: url("/assets/spritesheets/terrains/water.png");
-  background-size: 4rem;
-  animation: background-sprites 1.5s steps(3) infinite;
+  background-size: cover;
+  background-image: url("/assets/spritesheets/terrains/background.png");
+  background-blend-mode: overlay;
+  background-repeat: no-repeat;
+  background-position: center;
   overflow: hidden;
 }
 
@@ -57,10 +63,14 @@ input[type="number"] {
   position: relative;
   margin: auto;
   /* Island size 16 x 16 */
-  width: 16rem;
+  width: 14rem;
   height: 16rem;
+
   display: flex;
   flex-direction: column;
+  /* TODO: do later, this is the hardest part */
+  /* background-image: url("/assets/spritesheets/terrains/arena.png");
+  background-size: contain; */
 }
 
 .island .row {
@@ -142,7 +152,6 @@ input[type="number"] {
 .playground .col {
   width: 1rem;
   height: 1rem;
-  background-image: url("/assets/spritesheets/terrains/dirt.png");
   background-size: 8rem;
   background-position-y: -1rem;
   background-position-x: -1rem;
@@ -308,10 +317,7 @@ input[type="number"] {
   height: 2rem;
   cursor: pointer;
   position: absolute;
-  background-image: url("/assets/spritesheets/controls/buttons.png");
-  background-size: 6rem;
-  background-position-x: -0.5rem;
-  background-position-y: -6.5rem;
+  background-size: contain;
   background-color: transparent;
   border: 0;
   outline: 0;
@@ -319,29 +325,31 @@ input[type="number"] {
 }
 
 .movement-controls button.up {
+  background-image: url("/assets/spritesheets/controls/up.png");
   top: 0;
   left: 2rem;
 }
 
 .movement-controls button.down {
+  background-image: url("/assets/spritesheets/controls/down.png");
   bottom: 0;
   left: 2rem;
 }
 
 .movement-controls button.left {
+  background-image: url("/assets/spritesheets/controls/left.png");
   top: 2rem;
   left: 0;
 }
 
 .movement-controls button.right {
+  background-image: url("/assets/spritesheets/controls/right.png");
   top: 2rem;
   right: 0;
 }
 
 .movement-controls button.selected {
-  background-position-x: -3.5rem;
-  background-position-y: -6.5rem;
-  filter: drop-shadow(0 0 5px white);
+  border: 1px solid red;
 }
 
 .bomb {
@@ -563,9 +571,7 @@ input[type="number"] {
 .right-corner .quit-button {
   width: 3rem;
   height: 1rem;
-  background-image: url("/assets/spritesheets/controls/play-button.png");
-  background-size: 6.125rem;
-  background-color: transparent;
+  background-color: #89b4e6;
   border: 0;
   outline: 0;
   cursor: pointer;
