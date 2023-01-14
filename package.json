@@ -28,9 +28,6 @@
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.2",
-    "@types/lodash.debounce": "^4.0.7",
-    "@unocss/preset-rem-to-px": "^0.48.4",
-    "@unocss/webpack": "^0.48.4",
-    "unocss": "^0.48.4"
+    "@types/lodash.debounce": "^4.0.7"
   }
 }
