@@ -42,12 +42,12 @@ export const RightCorner = () => {
     <div className="absolute top-4 right-4 z-50 flex flex-col items-end">
       {gameState && (
         <>
-          <div className="flex gap-2">
+          <div className="flex gap-4">
             {gameState.status === "new" &&
             gameState.players[0].id === currentPlayer?.id ? (
               <button
                 type="button"
-                className="text-xl text-white px-3 bg-blue-300 rounded-md"
+                className="text-xl text-white px-3 bg-blue-300 rounded-md hover:scale-105"
                 onClick={onStartGame}
                 disabled={isLoading}
               >
@@ -56,7 +56,7 @@ export const RightCorner = () => {
             ) : null}
             <button
               type="button"
-              className="text-xl text-white px-3 py-2 bg-blue-300 rounded-md"
+              className="text-xl text-white px-3 py-2 bg-red-300 rounded-md hover:scale-105"
               onClick={quitGame}
             >
               Quit
