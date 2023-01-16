@@ -1,5 +1,4 @@
-import useSWR, { Key } from "swr";
-import { Fetcher, SWRConfiguration } from "swr/dist/types";
+import useSWR, { Fetcher, Key, SWRConfiguration } from "swr";
 import { useState, useEffect } from "react";
 
 export function useFetchWithCache<Data = any, Error = any>(

@@ -47,7 +47,7 @@ const GameContextProvider = ({ children }: PropsWithChildren) => {
   );
   const gameState = data?.data;
   const currentPlayer = gameState?.players.find(
-    (player) => player.token === playerToken
+    (player: Player) => player.token === playerToken
   );
 
   const [nextMove, setNextMove] = useState<MoveType>();
