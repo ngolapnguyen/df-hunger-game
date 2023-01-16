@@ -41,19 +41,23 @@ export const RightCorner = () => {
     <div className="right-corner">
       {gameState && (
         <>
-          <div>
+          <div className="flex gap-2">
             {gameState.status === "new" &&
             gameState.players[0].id === currentPlayer?.id ? (
               <button
                 type="button"
-                className="quit-button"
+                className="quit-button rounded-md border-solid"
                 onClick={onStartGame}
                 disabled={isLoading}
               >
                 Start
               </button>
             ) : null}
-            <button type="button" className="quit-button" onClick={quitGame}>
+            <button
+              type="button"
+              className="quit-button rounded-md"
+              onClick={quitGame}
+            >
               Quit
             </button>
           </div>

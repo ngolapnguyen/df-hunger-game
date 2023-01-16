@@ -79,33 +79,25 @@ export const MovementControls = () => {
         className={["up", nextMove === "up" ? "selected" : ""].join(" ")}
         onClick={() => onMove("up")}
         disabled={isLoading}
-      >
-        Up
-      </button>
+      />
       <button
         type="button"
         className={["down", nextMove === "down" ? "selected" : ""].join(" ")}
         onClick={() => onMove("down")}
         disabled={isLoading}
-      >
-        Down
-      </button>
+      />
       <button
         type="button"
         className={["left", nextMove === "left" ? "selected" : ""].join(" ")}
         onClick={() => onMove("left")}
         disabled={isLoading}
-      >
-        Left
-      </button>
+      />
       <button
         type="button"
         className={["right", nextMove === "right" ? "selected" : ""].join(" ")}
         onClick={() => onMove("right")}
         disabled={isLoading}
-      >
-        Right
-      </button>
+      />
     </div>
   );
 };
