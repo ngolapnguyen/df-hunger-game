@@ -36,7 +36,7 @@ const GameContextProvider = ({ children }: PropsWithChildren) => {
 
   const {
     data,
-    loading: isLoadingGameState,
+    isLoading: isLoadingGameState,
     mutate: mutateGameState,
   } = useFetchWithCache(
     [GET_PATHS.gameDetail(gameId)],
