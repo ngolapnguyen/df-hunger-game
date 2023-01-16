@@ -2,9 +2,10 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Deployements:
 
-| Name        | Link                                |
-| ----------- | ----------------------------------- |
-| Development | https://df-hunger-game.netlify.app/ |
+| Name         | Link                                    |
+| ------------ | --------------------------------------- |
+| V2 (current) | https://df-hunger-game.netlify.app/     |
+| V1           | https://v1--df-hunger-game.netlify.app/ |
 
 ## Getting Started
 
