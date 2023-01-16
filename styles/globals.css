@@ -19,7 +19,7 @@ body,
 }
 
 button.primary {
- @apply bg-white text-black px-4 py-2 font-medium rounded-md;
+  @apply bg-white text-black px-4 py-2 font-medium rounded-md;
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -57,20 +57,6 @@ input[type="text"] {
 }
 
 /* Island */
-
-.island {
-  position: relative;
-  margin: auto;
-  /* Island size 16 x 16 */
-  width: 14rem;
-  height: 16rem;
-
-  display: flex;
-  flex-direction: column;
-  /* TODO: do later, this is the hardest part */
-  /* background-image: url("/assets/spritesheets/terrains/arena.png");
-  background-size: contain; */
-}
 
 .island .row {
   width: 100%;
@@ -401,7 +387,6 @@ input[type="text"] {
 
 .log .header {
   color: white;
-  font-size: 0.75rem;
   text-align: center;
   margin-bottom: 0.25rem;
   padding: 0 0.5rem;
@@ -415,8 +400,8 @@ input[type="text"] {
 }
 
 .log-item {
-  font-size: 0.375rem;
-  height: 1rem;
+  font-size: 0.5rem;
+  height: 2rem;
   padding: 0.125rem;
   margin-bottom: 0.125rem;
   border-radius: 0.125rem;
@@ -451,82 +436,6 @@ input[type="text"] {
   outline: 0;
   color: white;
   cursor: pointer;
-}
-
-/* Left Corner */
-
-.left-corner {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  font-size: 0.75rem;
-  color: white;
-  line-height: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.left-corner .items {
-  margin-bottom: 0.5rem;
-}
-
-.left-corner .items > span {
-  margin-right: 0.875rem;
-}
-
-/* Points */
-
-.points {
-  font-size: 1rem;
-}
-
-/* Rounds */
-
-.rounds {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
-}
-
-.rounds .loader {
-  width: 0.75rem;
-  height: 0.75rem;
-  margin-left: 0.125rem;
-}
-
-.rounds .countdown {
-  font-size: 1rem;
-}
-
-.rounds .countdown small {
-  font-size: 0.75rem;
-}
-
-/* Right corner */
-
-.right-corner {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  font-size: 1rem;
-  color: white;
-  line-height: 1;
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-.right-corner .quit-button {
-  width: 3rem;
-  height: 1rem;
-  background-color: #89b4e6;
-  border: 0;
-  outline: 0;
-  cursor: pointer;
-  font-size: 0.5rem;
 }
 
 /* Goal */

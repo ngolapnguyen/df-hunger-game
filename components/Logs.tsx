@@ -62,7 +62,10 @@ export const Logs = () => {
           .map((playerId, index) => {
             return (
               <div
-                className={["log", isLogsExpanded ? "expanded" : ""].join(" ")}
+                className={[
+                  "log text-xl",
+                  isLogsExpanded ? "expanded" : "",
+                ].join(" ")}
                 key={playerId}
               >
                 <div className="header">

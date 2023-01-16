@@ -1,3 +1,4 @@
+import { Icon } from "@iconify/react";
 import { useRef, useState } from "react";
 import { useGameContext } from "../contexts/game";
 import { client } from "../libs/apis";
@@ -38,7 +39,7 @@ export const RightCorner = () => {
   };
 
   return (
-    <div className="right-corner">
+    <div className="absolute top-4 right-4 z-50 flex flex-col items-end">
       {gameState && (
         <>
           <div className="flex gap-2">
@@ -46,7 +47,7 @@ export const RightCorner = () => {
             gameState.players[0].id === currentPlayer?.id ? (
               <button
                 type="button"
-                className="quit-button rounded-md border-solid"
+                className="text-xl text-white px-3 bg-blue-300 rounded-md"
                 onClick={onStartGame}
                 disabled={isLoading}
               >
@@ -55,7 +56,7 @@ export const RightCorner = () => {
             ) : null}
             <button
               type="button"
-              className="quit-button rounded-md"
+              className="text-xl text-white px-3 py-2 bg-blue-300 rounded-md"
               onClick={quitGame}
             >
               Quit
@@ -63,10 +64,14 @@ export const RightCorner = () => {
           </div>
           <button
             type="button"
-            className="audio-button"
+            className="text-xl text-white mt-4"
             onClick={onAudioButtonClick}
           >
-            Sound: {isAudioOff ? "Off" : "On"}
+            {isAudioOff ? (
+              <Icon icon="akar-icons:sound-off" width={24} height={24} />
+            ) : (
+              <Icon icon="akar-icons:sound-on" width={24} height={24} />
+            )}
           </button>
           <audio
             src="/assets/sounds/track02.mp3"

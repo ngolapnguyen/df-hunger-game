@@ -76,7 +76,7 @@ export const Map = () => {
 
   return (
     <>
-      <div className="island">
+      <div className="island relative m-auto w-64 h-64 flex flex-col">
         {new Array(ISLAND_SIZE).fill(0).map((_, rowIndex) => (
           <div className="row" key={rowIndex}>
             {new Array(ISLAND_SIZE).fill(0).map((_, colIndex) => {

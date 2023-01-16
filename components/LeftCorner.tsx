@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { useClipboard } from "@dwarvesf/react-hooks";
+import { Icon } from "@iconify/react";
 import { useGameContext } from "../contexts/game";
 import useCountdown from "../hooks/useCountdown";
 
@@ -16,29 +18,25 @@ const RoundCountdown = () => {
 
 export const LeftCorner = () => {
   const { gameState, currentPlayer, isLoadingGameState } = useGameContext();
+  const { hasCopied, onCopy } = useClipboard(gameState?.id || "");
 
   return (
-    <div className="left-corner">
-      <div className="rounds">
+    <div className="absolute top-4 left-4 text-xl text-white flx flex-col items-start">
+      <div className="rounds flex items-center">
         <span>
-          Next round in:{" "}
-          <span className="countdown">
-            {gameState?.round_expire_at ? <RoundCountdown /> : "-"}
-          </span>
+          Next round in: {gameState?.round_expire_at ? <RoundCountdown /> : "-"}
         </span>
         {isLoadingGameState && (
           <Image
             src="/assets/images/spinner.svg"
-            className="loader"
+            className="w-5 h-5 ml-1"
             width={48}
             height={48}
             alt=""
           />
         )}
       </div>
-      {currentPlayer && (
-        <div className="points">Points: {currentPlayer?.points || 0}</div>
-      )}
+      {currentPlayer && <div>Points: {currentPlayer?.points || 0}</div>}
       <div className="items">
         <span>
           <span className="item point-2" />: 2
@@ -55,7 +53,16 @@ export const LeftCorner = () => {
       </div>
 
       <div>Game Status: {gameState?.status}</div>
-      <div>Game ID: {gameState?.id}</div>
+      <div className="flex items-center whitespace-pre">
+        Game ID: <span className="font-semibold">{gameState?.id}</span>
+        <button onClick={onCopy} className="ml-2">
+          {hasCopied ? (
+            <Icon icon="icon-park-outline:success" />
+          ) : (
+            <Icon icon="icon-park-outline:copy" />
+          )}
+        </button>
+      </div>
     </div>
   );
 };
