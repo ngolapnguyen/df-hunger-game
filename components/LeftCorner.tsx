@@ -3,6 +3,7 @@ import { useClipboard } from "@dwarvesf/react-hooks";
 import { Icon } from "@iconify/react";
 import { useGameContext } from "../contexts/game";
 import useCountdown from "../hooks/useCountdown";
+import { GameStatus } from "../types/game";
 
 const RoundCountdown = () => {
   const { gameState } = useGameContext();
@@ -19,6 +20,29 @@ const RoundCountdown = () => {
 export const LeftCorner = () => {
   const { gameState, currentPlayer, isLoadingGameState } = useGameContext();
   const { hasCopied, onCopy } = useClipboard(gameState?.id || "");
+
+  const renderStatus = (status?: string) => {
+    let statusClassName = "";
+    switch (status) {
+      case GameStatus.NEW:
+        statusClassName = "text-yellow-300";
+        break;
+      case GameStatus.PLAYING:
+        statusClassName = "text-green-500";
+        break;
+      case GameStatus.COMPLETED:
+        statusClassName = "text-red-500";
+        break;
+      default:
+        break;
+    }
+
+    return (
+      <div className={`first-letter:uppercase font-medium ${statusClassName}`}>
+        {status || "-"}
+      </div>
+    );
+  };
 
   return (
     <div className="absolute top-4 left-4 text-xl text-white flx flex-col items-start">
@@ -52,7 +76,9 @@ export const LeftCorner = () => {
         </span>
       </div>
 
-      <div>Game Status: {gameState?.status}</div>
+      <div className="flex whitespace-pre">
+        Game Status: {renderStatus(gameState?.status)}
+      </div>
       <div className="flex items-center whitespace-pre">
         Game ID: <span className="font-semibold">{gameState?.id}</span>
         <button onClick={onCopy} className="ml-2">
