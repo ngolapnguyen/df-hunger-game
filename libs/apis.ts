@@ -9,6 +9,7 @@ export interface Response<T> {
 
 // keys for swr
 export const GET_PATHS = {
+  game: "/game",
   gameDetail: (id: string) => `/game/${id}`,
 };
 
@@ -31,6 +32,14 @@ class Client {
 
   public getGameDetail(id: string) {
     return fetcher<Response<Game>>(`${BASE_URL}/api/game/${id}`, {
+      headers: {
+        ...this.headers,
+      },
+    });
+  }
+
+  public getGameList() {
+    return fetcher<Response<Game[]>>(`${BASE_URL}/api/game`, {
       headers: {
         ...this.headers,
       },
