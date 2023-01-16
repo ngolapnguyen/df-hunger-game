@@ -58,12 +58,15 @@ class Client {
     });
   }
 
-  public startGame(id: string) {
+  public startGame(id: string, token: string) {
     return fetcher<Response<Game>>(`${BASE_URL}/api/game/${id}/start`, {
       method: "POST",
       headers: {
         ...this.headers,
       },
+      body: JSON.stringify({
+        token,
+      }),
     });
   }
 

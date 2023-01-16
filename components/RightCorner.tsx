@@ -14,7 +14,7 @@ export const RightCorner = () => {
     if (window.confirm("Are you sure you want to start the game now?")) {
       try {
         setIsLoading(true);
-        await client.startGame(gameState?.id || "");
+        await client.startGame(gameState?.id || "", currentPlayer!.token);
         mutateGameState();
       } catch (error) {
         alert(error);
