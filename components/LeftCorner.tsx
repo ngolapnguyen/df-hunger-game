@@ -71,7 +71,7 @@ export const LeftCorner = () => {
             <div className="w-4 h-4 md:w-6 md:h-6">
               <Image src={src} alt="Item" fill className="object-contain" />
             </div>
-            {point}
+            {point}pts
           </div>
         ))}
       </div>
@@ -116,7 +116,7 @@ export const LeftCorner = () => {
           {currentPlayer && (
             <tr>
               <td>Points</td>
-              <td>{currentPlayer?.points || 0}</td>
+              <td>{currentPlayer?.points || 0}pts</td>
             </tr>
           )}
         </tbody>
