@@ -81,7 +81,7 @@ export const LeftCorner = () => {
           <tr>
             <td>ID</td>
             <td className="flex items-center">
-              {gameState?.id}
+              <span className="font-bold">{gameState?.id}</span>
               <button onClick={onCopy} className="ml-2">
                 {hasCopied ? (
                   <Icon icon="icon-park-outline:success" />
@@ -97,8 +97,8 @@ export const LeftCorner = () => {
             <td>{renderStatus(gameState?.status)}</td>
           </tr>
 
-          <tr>
-            <td>Next round in</td>
+          <tr className="whitespace-pre">
+            <td>Next round in </td>
             <td className="flex items-center">
               {gameState?.round_expire_at ? <RoundCountdown /> : "-"}
               {isLoadingGameState && (
