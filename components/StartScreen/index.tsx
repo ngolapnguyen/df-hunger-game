@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from "react";
+import Image from "next/image";
 import { useGameContext } from "../../contexts/game";
 import { client } from "../../libs/apis";
 import { JoinGame } from "./JoinGame";
@@ -81,7 +82,10 @@ export const StartScreen = () => {
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex text-white text-base p-4">
-      <div className="max-w-full w-[384px] max-h-[80vh] rounded-md bg-background-primary/90 overflow-auto p-4 md:p-6 m-auto">
+      <div className="max-w-full w-[384px] max-h-[80vh] rounded-md bg-background-primary/90 overflow-auto p-4 md:p-6 m-auto flex flex-col gap-y-4 md:gap-y-8">
+        <div className="w-32 h-32 mx-auto">
+          <Image src="/assets/images/logo.png" fill alt="Logo" />
+        </div>
         {render}
       </div>
     </div>
