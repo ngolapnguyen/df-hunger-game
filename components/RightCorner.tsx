@@ -39,15 +39,15 @@ export const RightCorner = () => {
   };
 
   return (
-    <div className="absolute top-4 right-4 z-50 flex flex-col items-end">
+    <div className="absolute top-2 right-2 md:top-4 md:right-4 z-50 flex flex-col items-end gap-y-2 md:gap-y-4">
       {gameState && (
         <>
-          <div className="flex gap-4">
+          <div className="flex gap-2 md:gap-4">
             {gameState.status === "new" &&
             gameState.players[0].id === currentPlayer?.id ? (
               <button
                 type="button"
-                className="text-xl text-white px-3 bg-blue-300 rounded-md hover:scale-105"
+                className="text-md md:text-xl text-white px-1 py-1 md:px-3 md:py-2 bg-blue-300 rounded-md hover:scale-105"
                 onClick={onStartGame}
                 disabled={isLoading}
               >
@@ -56,7 +56,7 @@ export const RightCorner = () => {
             ) : null}
             <button
               type="button"
-              className="text-xl text-white px-3 py-2 bg-red-300 rounded-md hover:scale-105"
+              className="text-md md:text-xl text-white px-1 py-1 md:px-3 md:py-2 bg-red-300 rounded-md hover:scale-105"
               onClick={quitGame}
             >
               Quit
@@ -64,7 +64,7 @@ export const RightCorner = () => {
           </div>
           <button
             type="button"
-            className="text-xl text-white mt-4"
+            className="text-xl text-white"
             onClick={onAudioButtonClick}
           >
             {isAudioOff ? (

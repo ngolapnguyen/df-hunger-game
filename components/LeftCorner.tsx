@@ -44,51 +44,83 @@ export const LeftCorner = () => {
     );
   };
 
+  const items = [
+    {
+      src: "/assets/spritesheets/items/crimson-shard.png",
+      point: 2,
+    },
+    {
+      src: "/assets/spritesheets/items/moon-stone.png",
+      point: 4,
+    },
+    {
+      src: "/assets/spritesheets/items/star.png",
+      point: 6,
+    },
+    {
+      src: "/assets/spritesheets/items/asteroid.png",
+      point: 8,
+    },
+  ];
+
   return (
-    <div className="absolute top-4 left-4 text-xl text-white flx flex-col items-start">
-      <div className="rounds flex items-center">
-        <span>
-          Next round in: {gameState?.round_expire_at ? <RoundCountdown /> : "-"}
-        </span>
-        {isLoadingGameState && (
-          <Image
-            src="/assets/images/spinner.svg"
-            className="w-5 h-5 ml-1"
-            width={48}
-            height={48}
-            alt=""
-          />
-        )}
-      </div>
-      {currentPlayer && <div>Points: {currentPlayer?.points || 0}</div>}
-      <div className="items">
-        <span>
-          <span className="item point-2" />: 2
-        </span>
-        <span>
-          <span className="item point-4" />: 4
-        </span>
-        <span>
-          <span className="item point-8" />: 6
-        </span>
-        <span>
-          <span className="item point-16" />: 8
-        </span>
+    <div className="absolute top-2 left-2 md:top-4 md:left-4 text-md md:text-xl text-white flex flex-col items-start gap-y-2 md:gap-y-4">
+      <div className="flex gap-2 md:gap-4">
+        {items.map(({ src, point }, idx) => (
+          <div className="flex gap-2 items-center" key={idx}>
+            <div className="w-4 h-4 md:w-6 md:h-6">
+              <Image src={src} alt="Item" fill className="object-contain" />
+            </div>
+            {point}
+          </div>
+        ))}
       </div>
 
-      <div className="flex whitespace-pre">
-        Game Status: {renderStatus(gameState?.status)}
-      </div>
-      <div className="flex items-center whitespace-pre">
-        Game ID: <span className="font-semibold">{gameState?.id}</span>
-        <button onClick={onCopy} className="ml-2">
-          {hasCopied ? (
-            <Icon icon="icon-park-outline:success" />
-          ) : (
-            <Icon icon="icon-park-outline:copy" />
+      <table>
+        <tbody>
+          <tr>
+            <td>ID</td>
+            <td className="flex items-center">
+              {gameState?.id}
+              <button onClick={onCopy} className="ml-2">
+                {hasCopied ? (
+                  <Icon icon="icon-park-outline:success" />
+                ) : (
+                  <Icon icon="icon-park-outline:copy" />
+                )}
+              </button>
+            </td>
+          </tr>
+
+          <tr>
+            <td>Status</td>
+            <td>{renderStatus(gameState?.status)}</td>
+          </tr>
+
+          <tr>
+            <td>Next round in</td>
+            <td className="flex items-center">
+              {gameState?.round_expire_at ? <RoundCountdown /> : "-"}
+              {isLoadingGameState && (
+                <Image
+                  src="/assets/images/spinner.svg"
+                  className="w-5 h-5 ml-1"
+                  width={48}
+                  height={48}
+                  alt=""
+                />
+              )}
+            </td>
+          </tr>
+
+          {currentPlayer && (
+            <tr>
+              <td>Points</td>
+              <td>{currentPlayer?.points || 0}</td>
+            </tr>
           )}
-        </button>
-      </div>
+        </tbody>
+      </table>
     </div>
   );
 };
