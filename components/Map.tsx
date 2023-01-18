@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef } from "react";
 import explosionAnimation from "../assets/lottie/explosion.json";
 import { GOALS } from "../constants/goal";
 import { MOVE_OFFSET } from "../constants/move";
+import { PLAYERS } from "../constants/player";
 import { useGameContext } from "../contexts/game";
 import { GameStatus } from "../types/game";
 import { dist } from "../utils/points";
@@ -165,20 +166,26 @@ export const Map = () => {
                       {player && (
                         <div
                           className={[
+                            "absolute w-full h-full",
                             playerFacingDirections.current[player.id],
                             wasHit ? "hit" : "idle",
                           ].join(" ")}
                           key={player.id}
                         >
-                          <div className="absolute p-2 text-sm">
-                            {player.id === currentPlayer?.id ? (
+                          <Image
+                            src={PLAYERS[player.id]}
+                            fill
+                            className="object-contain !-top-1/4"
+                            alt={player.name ? player.name : player.id}
+                          />
+                          {/* {player.id === currentPlayer?.id ? (
                               "You"
                             ) : (
                               <>{player.name ? player.name : player.id}</>
-                            )}
-                            <br />
+                            )} */}
+                          <span className="text-xs text-white">
                             {player.points}
-                          </div>
+                          </span>
 
                           {/* {winner?.id === player.id && (
                           <div className="winner-tag">🎉Winner🎉</div>

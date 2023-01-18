@@ -191,15 +191,6 @@ input[type="text"] {
 
 /* Movement Controls */
 
-.movement-controls {
-  z-index: 1;
-  position: absolute;
-  width: 6rem;
-  height: 6rem;
-  bottom: 1rem;
-  right: 1rem;
-}
-
 .movement-controls button {
   width: 2rem;
   height: 2rem;
@@ -210,30 +201,6 @@ input[type="text"] {
   border: 0;
   outline: 0;
   font-size: 0.5rem;
-}
-
-.movement-controls button.up {
-  background-image: url("/assets/spritesheets/controls/up.png");
-  top: 0;
-  left: 2rem;
-}
-
-.movement-controls button.down {
-  background-image: url("/assets/spritesheets/controls/down.png");
-  bottom: 0;
-  left: 2rem;
-}
-
-.movement-controls button.left {
-  background-image: url("/assets/spritesheets/controls/left.png");
-  top: 2rem;
-  left: 0;
-}
-
-.movement-controls button.right {
-  background-image: url("/assets/spritesheets/controls/right.png");
-  top: 2rem;
-  right: 0;
 }
 
 .movement-controls button.selected {

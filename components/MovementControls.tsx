@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useGameContext } from "../contexts/game";
 import { client } from "../libs/apis";
+import Image from "next/image";
 import debounce from "lodash.debounce";
 
 export const MovementControls = () => {
@@ -73,31 +74,48 @@ export const MovementControls = () => {
   }
 
   return (
-    <div className="movement-controls">
+    <div className="movement-controls w-24 h-24 absolute bottom-2 right-2 md:bottom-4 md:right-4">
       <button
         type="button"
-        className={["up", nextMove === "up" ? "selected" : ""].join(" ")}
+        className={["up left-8", nextMove === "up" ? "selected" : ""].join(" ")}
         onClick={() => onMove("up")}
         disabled={isLoading}
-      />
+      >
+        <Image src="/assets/spritesheets/controls/up.png" fill alt="Up" />
+      </button>
       <button
         type="button"
-        className={["down", nextMove === "down" ? "selected" : ""].join(" ")}
+        className={[
+          "down bottom-0 left-8",
+          nextMove === "down" ? "selected" : "",
+        ].join(" ")}
         onClick={() => onMove("down")}
         disabled={isLoading}
-      />
+      >
+        <Image src="/assets/spritesheets/controls/down.png" fill alt="Down" />
+      </button>
       <button
         type="button"
-        className={["left", nextMove === "left" ? "selected" : ""].join(" ")}
+        className={[
+          "left top-8 left-0",
+          nextMove === "left" ? "selected" : "",
+        ].join(" ")}
         onClick={() => onMove("left")}
         disabled={isLoading}
-      />
+      >
+        <Image src="/assets/spritesheets/controls/left.png" fill alt="Left" />
+      </button>
       <button
         type="button"
-        className={["right", nextMove === "right" ? "selected" : ""].join(" ")}
+        className={[
+          "right top-8 right-0",
+          nextMove === "right" ? "selected" : "",
+        ].join(" ")}
         onClick={() => onMove("right")}
         disabled={isLoading}
-      />
+      >
+        <Image src="/assets/spritesheets/controls/right.png" fill alt="Right" />
+      </button>
     </div>
   );
 };
