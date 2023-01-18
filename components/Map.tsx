@@ -2,6 +2,7 @@ import Lottie from "lottie-react";
 import Image from "next/image";
 import { useEffect, useMemo, useRef } from "react";
 import explosionAnimation from "../assets/lottie/explosion.json";
+import { GOALS } from "../constants/goal";
 import { MOVE_OFFSET } from "../constants/move";
 import { useGameContext } from "../contexts/game";
 import { GameStatus } from "../types/game";
@@ -155,7 +156,7 @@ export const Map = () => {
 
                       {goal && (
                         <Image
-                          src="/assets/images/portal.webp"
+                          src={GOALS[goal.player_id! || "a"]}
                           alt="goal"
                           fill
                         />
