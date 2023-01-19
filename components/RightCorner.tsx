@@ -47,7 +47,7 @@ export const RightCorner = () => {
             gameState.players[0].id === currentPlayer?.id ? (
               <button
                 type="button"
-                className="text-md md:text-xl text-white px-1 py-1 md:px-3 md:py-2 bg-blue-300 rounded-md hover:scale-105"
+                className="text-md md:text-xl text-white px-1 py-1 md:px-3 md:py-2 bg-blue-500 rounded-md hover:scale-105"
                 onClick={onStartGame}
                 disabled={isLoading}
               >
@@ -56,7 +56,7 @@ export const RightCorner = () => {
             ) : null}
             <button
               type="button"
-              className="text-md md:text-xl text-white px-1 py-1 md:px-3 md:py-2 bg-red-300 rounded-md hover:scale-105"
+              className="text-md md:text-xl text-white px-1 py-1 md:px-3 md:py-2 bg-red-500 rounded-md hover:scale-105"
               onClick={quitGame}
             >
               Quit
