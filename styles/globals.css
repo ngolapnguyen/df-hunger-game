@@ -191,18 +191,6 @@ input[type="text"] {
 
 /* Movement Controls */
 
-.movement-controls button {
-  width: 2rem;
-  height: 2rem;
-  cursor: pointer;
-  position: absolute;
-  background-size: contain;
-  background-color: transparent;
-  border: 0;
-  outline: 0;
-  font-size: 0.5rem;
-}
-
 .movement-controls button.selected {
   border: 1px solid red;
 }

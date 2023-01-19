@@ -74,48 +74,61 @@ export const MovementControls = () => {
   }
 
   return (
-    <div className="movement-controls w-24 h-24 absolute bottom-2 right-2 md:bottom-4 md:right-4">
-      <button
-        type="button"
-        className={["up left-8", nextMove === "up" ? "selected" : ""].join(" ")}
-        onClick={() => onMove("up")}
-        disabled={isLoading}
-      >
-        <Image src="/assets/spritesheets/controls/up.png" fill alt="Up" />
-      </button>
-      <button
-        type="button"
-        className={[
-          "down bottom-0 left-8",
-          nextMove === "down" ? "selected" : "",
-        ].join(" ")}
-        onClick={() => onMove("down")}
-        disabled={isLoading}
-      >
-        <Image src="/assets/spritesheets/controls/down.png" fill alt="Down" />
-      </button>
-      <button
-        type="button"
-        className={[
-          "left top-8 left-0",
-          nextMove === "left" ? "selected" : "",
-        ].join(" ")}
-        onClick={() => onMove("left")}
-        disabled={isLoading}
-      >
-        <Image src="/assets/spritesheets/controls/left.png" fill alt="Left" />
-      </button>
-      <button
-        type="button"
-        className={[
-          "right top-8 right-0",
-          nextMove === "right" ? "selected" : "",
-        ].join(" ")}
-        onClick={() => onMove("right")}
-        disabled={isLoading}
-      >
-        <Image src="/assets/spritesheets/controls/right.png" fill alt="Right" />
-      </button>
+    <div className="movement-controls w-24 h-24 md:w-36 md:h-36 absolute bottom-2 right-2 md:bottom-4 md:right-4 grid grid-rows-3">
+      <div className="flex justify-center">
+        <button
+          type="button"
+          className={[
+            "up h-full aspect-square hover:scale-105",
+            nextMove === "up" ? "selected" : "",
+          ].join(" ")}
+          onClick={() => onMove("up")}
+          disabled={isLoading}
+        >
+          <Image src="/assets/spritesheets/controls/up.png" fill alt="Up" />
+        </button>
+      </div>
+      <div className="flex justify-between">
+        <button
+          type="button"
+          className={[
+            "left h-full aspect-square hover:scale-105",
+            nextMove === "left" ? "selected" : "",
+          ].join(" ")}
+          onClick={() => onMove("left")}
+          disabled={isLoading}
+        >
+          <Image src="/assets/spritesheets/controls/left.png" fill alt="Left" />
+        </button>
+        <button
+          type="button"
+          className={[
+            "right h-full aspect-square hover:scale-105",
+            nextMove === "right" ? "selected" : "",
+          ].join(" ")}
+          onClick={() => onMove("right")}
+          disabled={isLoading}
+        >
+          <Image
+            src="/assets/spritesheets/controls/right.png"
+            fill
+            alt="Right"
+          />
+        </button>
+      </div>
+      <div className="flex justify-center">
+        <button
+          type="button"
+          className={[
+            "down h-full aspect-square hover:scale-105",
+            nextMove === "down" ? "selected" : "",
+          ].join(" ")}
+          onClick={() => onMove("down")}
+          disabled={isLoading}
+        >
+          <Image src="/assets/spritesheets/controls/down.png" fill alt="Down" />
+        </button>
+      </div>
     </div>
   );
 };
