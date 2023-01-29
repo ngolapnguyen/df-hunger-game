@@ -52,8 +52,13 @@ export const Logs = () => {
   }, [gameState]);
 
   return (
-    <div className={["logs", isInspecting ? "inspecting" : ""].join(" ")}>
-      <div className="logs-container">
+    <div
+      className={[
+        "absolute bottom-0 left-2 md:left-4",
+        isInspecting ? "transform-none" : "",
+      ].join(" ")}
+    >
+      <div className="flex overflow-x-auto overflow-y-hidden max-w-3xl gap-x-2">
         {Object.keys(historyByPlayer)
           .filter(
             (playerId) =>
@@ -63,29 +68,32 @@ export const Logs = () => {
             return (
               <div
                 className={[
-                  "log text-xl",
-                  isLogsExpanded ? "expanded" : "",
+                  "bg-blue-400 w-40 h-40 md:w-60 md:h-60 p-3 flex flex-col items-center translate-y-48 transition-all text-xl rounded-md",
+                  isLogsExpanded ? "!translate-y-0" : "",
                 ].join(" ")}
                 key={playerId}
               >
-                <div className="header">
+                <div className="text-white text-center mb-2 md:mb-4 px-2 md:px-4">
                   {isInspecting ? <>{`P${index + 1}`}&nbsp;</> : ""} Logs
                 </div>
-                <div className="content">
+                <div className="flex-1 w-full overflow-auto">
                   {historyByPlayer[playerId].length > 0 ? (
                     historyByPlayer[playerId].map((history, historyIndex) => {
                       return (
-                        <div className="log-item" key={historyIndex}>
+                        <div
+                          className="bg-white p-1 text-xs"
+                          key={historyIndex}
+                        >
                           {isInspecting ? `P${index + 1}` : "You"}{" "}
                           {history.action} {history.action_result}.
                           {history.got_bomb && (
-                            <div className="danger">
+                            <div className="text-red-500">
                               {isInspecting ? `P${index + 1}` : "You"} hit a
                               bomb!
                             </div>
                           )}
                           {history.item && (
-                            <div className="success">
+                            <div className="text-green-500">
                               {isInspecting ? `P${index + 1}` : "You"} got{" "}
                               {history.item.value} points!
                             </div>
@@ -103,7 +111,9 @@ export const Logs = () => {
                       );
                     })
                   ) : (
-                    <div className="log-item">No logs.</div>
+                    <div className="bg-white h-8 p-1 mb-1 rounded-sm text-xs flex flex-col justify-center text-center">
+                      No logs.
+                    </div>
                   )}
                 </div>
               </div>
@@ -112,7 +122,7 @@ export const Logs = () => {
       </div>
       <button
         type="button"
-        className="expand-button"
+        className="bg-white rounded-md cursor-pointer absolute bottom-2 md:bottom-4 -right-8 w-6 h-6"
         onClick={() => setIsLogsExpanded((o) => !o)}
       >
         {!isLogsExpanded ? (
