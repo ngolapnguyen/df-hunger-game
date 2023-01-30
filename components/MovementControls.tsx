@@ -74,13 +74,13 @@ export const MovementControls = () => {
   }
 
   return (
-    <div className="movement-controls w-24 h-24 md:w-36 md:h-36 absolute bottom-2 right-2 md:bottom-4 md:right-4 grid grid-rows-3">
+    <div className="w-24 h-24 md:w-36 md:h-36 absolute bottom-2 right-2 md:bottom-4 md:right-4 grid grid-rows-3">
       <div className="flex justify-center">
         <button
           type="button"
           className={[
             "up h-full aspect-square hover:scale-105",
-            nextMove === "up" ? "selected" : "",
+            nextMove === "up" ? "border-2 rounded-md	border-blue-500" : "",
           ].join(" ")}
           onClick={() => onMove("up")}
           disabled={isLoading}
@@ -93,7 +93,7 @@ export const MovementControls = () => {
           type="button"
           className={[
             "left h-full aspect-square hover:scale-105",
-            nextMove === "left" ? "selected" : "",
+            nextMove === "left" ? "border-2 rounded-md	border-blue-500" : "",
           ].join(" ")}
           onClick={() => onMove("left")}
           disabled={isLoading}
@@ -104,7 +104,7 @@ export const MovementControls = () => {
           type="button"
           className={[
             "right h-full aspect-square hover:scale-105",
-            nextMove === "right" ? "selected" : "",
+            nextMove === "right" ? "border-2 rounded-md	border-blue-500" : "",
           ].join(" ")}
           onClick={() => onMove("right")}
           disabled={isLoading}
@@ -121,7 +121,7 @@ export const MovementControls = () => {
           type="button"
           className={[
             "down h-full aspect-square hover:scale-105",
-            nextMove === "down" ? "selected" : "",
+            nextMove === "down" ? "border-2 rounded-md	border-blue-500" : "",
           ].join(" ")}
           onClick={() => onMove("down")}
           disabled={isLoading}
