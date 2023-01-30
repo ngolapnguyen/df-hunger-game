@@ -56,61 +56,6 @@ input[type="text"] {
   overflow: hidden;
 }
 
-/* Island */
-
-.island .row {
-  width: 100%;
-  display: flex;
-}
-
-.island .col {
-  width: 1rem;
-  height: 1rem;
-  background-image: url("/assets/spritesheets/terrains/grass.png");
-  background-size: 6rem;
-  background-position-y: -6rem;
-}
-
-.island .row:first-of-type .col {
-  background-position-x: -1rem;
-  background-position-y: 0;
-}
-
-.island .col:first-of-type {
-  background-position-x: 0;
-  background-position-y: -1rem;
-}
-
-.island .col:last-of-type {
-  background-position-x: -2rem;
-  background-position-y: -1rem;
-}
-
-.island .row:last-of-type .col {
-  background-position-x: -1rem;
-  background-position-y: -2rem;
-}
-
-.island .row:first-of-type .col:first-of-type {
-  background-position-x: 0;
-  background-position-y: 0;
-}
-
-.island .row:first-of-type .col:last-of-type {
-  background-position-x: -2rem;
-  background-position-y: 0;
-}
-
-.island .row:last-of-type .col:first-of-type {
-  background-position-x: 0;
-  background-position-y: -2rem;
-}
-
-.island .row:last-of-type .col:last-of-type {
-  background-position-x: -2rem;
-  background-position-y: -2rem;
-}
-
 /* Playground */
 @keyframes flicker {
   0% {
@@ -154,22 +99,6 @@ input[type="text"] {
   }
 }
 
-.player:nth-of-type(1)::before {
-  background-image: url("/assets/spritesheets/players/1.png");
-}
-
-.player:nth-of-type(2)::before {
-  background-image: url("/assets/spritesheets/players/2.png");
-}
-
-.player:nth-of-type(3)::before {
-  background-image: url("/assets/spritesheets/players/3.png");
-}
-
-.player:nth-of-type(4)::before {
-  background-image: url("/assets/spritesheets/players/4.png");
-}
-
 .player.idle::before {
   animation: player-idle-sprites 0.5s steps(4) infinite;
 }
@@ -182,27 +111,7 @@ input[type="text"] {
   transform: scaleX(-1);
 }
 
-.arrow {
-  width: 1rem;
-  height: 1rem;
-  position: absolute;
-  transform: rotate(90deg) translateX(-50%);
-}
-
-/* Movement Controls */
-
-.movement-controls button.selected {
-  border: 1px solid red;
-}
-
 /* Cell Value */
-
-.grid .item {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
 
 .item {
   width: 0.75rem;
@@ -258,37 +167,4 @@ input[type="text"] {
   background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
   height: 100%;
-}
-
-/* Audio Button */
-
-.audio-button {
-  border: 0;
-  outline: 0;
-  font-size: 0.5rem;
-  text-decoration: underline;
-  background: transparent;
-}
-
-/* Inspecting input */
-
-.inspecting-input {
-  font-size: 0.375rem;
-}
-
-@media only screen and (max-width: 400px) {
-  .left-corner {
-    top: 0.5rem;
-    left: 0.5rem;
-  }
-
-  .right-corner {
-    top: 0.5rem;
-    right: 0.5rem;
-  }
-
-  .movement-controls {
-    bottom: 0.5rem;
-    right: 0.5rem;
-  }
 }
