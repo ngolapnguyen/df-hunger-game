@@ -5,6 +5,7 @@ import explosionAnimation from "../assets/lottie/explosion.json";
 import { GOALS } from "../constants/goal";
 import { MOVE_OFFSET } from "../constants/move";
 import { PLAYERS } from "../constants/player";
+import { POINTS } from "../constants/point";
 import { useGameContext } from "../contexts/game";
 import { GameStatus } from "../types/game";
 import { dist } from "../utils/points";
@@ -142,16 +143,15 @@ export const Map = () => {
                       className={[
                         "col w-full h-full relative",
                         isNext ? "next" : "",
-                        // (rowIndex + colIndex) % 2 === 0 ? "bg-red-700" : "", // for debug only
                       ].join(" ")}
                       key={colIndex}
                     >
                       {point > 0 && (
-                        <span
-                          className={[
-                            "absolute item",
-                            `point-${point.toString()}`,
-                          ].join(" ")}
+                        <Image
+                          src={POINTS[point]}
+                          className="p-2 md:p-4"
+                          alt={String(point)}
+                          fill
                         />
                       )}
 
@@ -178,18 +178,22 @@ export const Map = () => {
                             className="object-contain !-top-1/4"
                             alt={player.name ? player.name : player.id}
                           />
-                          {/* {player.id === currentPlayer?.id ? (
-                              "You"
-                            ) : (
-                              <>{player.name ? player.name : player.id}</>
-                            )} */}
-                          <span className="text-xs text-white">
-                            {player.points}
-                          </span>
+                          <div className="md:text-xs text-white">
+                            <div>
+                              {player.id === currentPlayer?.id ? (
+                                "You"
+                              ) : (
+                                <>{player.name ? player.name : player.id}</>
+                              )}
+                            </div>
+                            <div>{player.points}</div>
+                          </div>
 
-                          {/* {winner?.id === player.id && (
-                          <div className="winner-tag">🎉Winner🎉</div>
-                        )} */}
+                          {winner?.id === player.id && (
+                            <div className="flex text-green-300 font-bold flex-row text-xs">
+                              Winner🎉
+                            </div>
+                          )}
                         </div>
                       )}
 

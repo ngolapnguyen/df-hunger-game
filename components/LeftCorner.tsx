@@ -4,6 +4,7 @@ import { Icon } from "@iconify/react";
 import { useGameContext } from "../contexts/game";
 import useCountdown from "../hooks/useCountdown";
 import { GameStatus } from "../types/game";
+import { POINTS } from "../constants/point";
 
 const RoundCountdown = () => {
   const { gameState } = useGameContext();
@@ -66,12 +67,17 @@ export const LeftCorner = () => {
   return (
     <div className="absolute top-2 left-2 md:top-4 md:left-4 text-sm md:text-xl text-white flex flex-col items-start gap-y-2 md:gap-y-4">
       <div className="flex gap-2 md:gap-4">
-        {items.map(({ src, point }, idx) => (
-          <div className="flex gap-2 items-center" key={idx}>
+        {Object.keys(POINTS).map((pts) => (
+          <div className="flex gap-2 items-center" key={pts}>
             <div className="w-4 h-4 md:w-6 md:h-6">
-              <Image src={src} alt="Item" fill className="object-contain" />
+              <Image
+                src={POINTS[pts]}
+                alt="Item"
+                fill
+                className="object-contain"
+              />
             </div>
-            {point}pts
+            {pts}pts
           </div>
         ))}
       </div>
